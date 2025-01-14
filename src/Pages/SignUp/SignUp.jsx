@@ -23,7 +23,7 @@ const SignUp = () => {
     // user registration with email pass
     newUserSet(data.email, data.password)
     .then(res=>{
-      upDateProfile(data.name, data.photoUrl)
+      upDateProfile({displayName: data.name, photoURL: data.photoUrl})
       .then(()=>{
         toast.success('Sign Up success!')
       })
