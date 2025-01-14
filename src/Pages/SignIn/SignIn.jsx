@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaGoogle } from 'react-icons/fa';
 import Lottie from 'react-lottie-player';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Typewriter } from 'react-simple-typewriter';
 import loginLotti from '../../assets/signIn.json'
+import { Helmet } from 'react-helmet-async';
+import useAuth from '../../Hooks/useAuth';
+import toast from 'react-hot-toast';
 
 const SignIn = () => {
   const {
@@ -14,19 +17,38 @@ const SignIn = () => {
   } = useForm();
 
   const [showPassword, setShowPassword] = useState(false);
+  const {createUserWithGoogle,loginUser, setUser} = useAuth()
+  const navigate = useNavigate()
 
   const onSubmit = (data) => {
-    console.log('Email/Password Login:', data);
-    // Handle login logic here (e.g., API call to authenticate the user)
+    loginUser(data.email, data.password)
+    .then(res=>{
+      setUser(res.user)
+      navigate('/dashboard')
+      toast.success('Sign In success!')
+    })
+    .catch(err=>{
+      toast.error(`${err.message}`)
+    })
   };
 
   const handleGoogleSignIn = () => {
-    console.log('Google Sign-In');
-    // Implement Google Sign-In logic here (e.g., Firebase or OAuth)
+    createUserWithGoogle()
+    .then(res=>{
+      setUser(res.user);
+      navigate('/dashboard')
+      toast.success('Google Sign Up success!')
+    })
+    .catch(err=>{
+      toast.error(`${err.message}`)
+    })
   };
 
   return (
     <div className="flex flex-col-reverse lg:flex-row justify-center items-center min-h-screen bg-black">
+      <Helmet>
+        <title>Sign In || Multi Task & Earning</title>
+      </Helmet>
       <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">
         <Typewriter

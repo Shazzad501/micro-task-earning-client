@@ -2,12 +2,17 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import signUpLotti  from '../../assets/signUp.json'
 import Lottie from 'react-lottie-player';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Typewriter } from 'react-simple-typewriter';
+import { Helmet } from 'react-helmet-async';
+import useAuth from '../../Hooks/useAuth';
+import toast from 'react-hot-toast';
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
-
+  const {upDateProfile, newUserSet, setUser} = useAuth();
+  const navigate = useNavigate()
+ 
   const {
     register,
     handleSubmit,
@@ -15,12 +20,29 @@ const SignUp = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
-    // Handle form submission logic here (e.g., API call to create a user)
+    // user registration with email pass
+    newUserSet(data.email, data.password)
+    .then(res=>{
+      upDateProfile(data.name, data.photoUrl)
+      .then(()=>{
+        toast.success('Sign Up success!')
+      })
+      .catch(err=>{
+        toast.error(`${err.message}`)
+      })
+      setUser(res.user)
+      navigate('/dashboard')
+    })
+    .catch(err=>{
+      toast.error(`${err.message}`)
+    })
   };
 
   return (
     <div className="flex flex-col-reverse lg:flex-row justify-center items-center min-h-screen bg-black">
+      <Helmet>
+        <title>Sign Up|| Multi Task & Earning</title>
+      </Helmet>
       <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
         <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">
         <Typewriter
