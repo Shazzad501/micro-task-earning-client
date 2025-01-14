@@ -8,6 +8,7 @@ import loginLotti from '../../assets/signIn.json'
 import { Helmet } from 'react-helmet-async';
 import useAuth from '../../Hooks/useAuth';
 import toast from 'react-hot-toast';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
 
 const SignIn = () => {
   const {
@@ -19,6 +20,7 @@ const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const {createUserWithGoogle,loginUser, setUser} = useAuth()
   const navigate = useNavigate()
+  const axiosSecure = useAxiosSecure();
 
   const onSubmit = (data) => {
     loginUser(data.email, data.password)
@@ -36,8 +38,24 @@ const SignIn = () => {
     createUserWithGoogle()
     .then(res=>{
       setUser(res.user);
-      navigate('/dashboard')
-      toast.success('Google Sign Up success!')
+      const userData = {
+        name: res.user?.displayName,
+        userEmail: res.user?.email,
+        userPhoto: res.user?.photoURL,
+        role: 'worker',
+        totalCoin: 10
+      }
+      // now save user info into db
+      axiosSecure.post('/users', userData)
+      .then(res=>{
+        if(res.data.insertedId){
+          toast.success('Google Sign Up success!')
+          navigate('/dashboard')
+        }
+      })
+      .catch(err=>{
+        toast.error(`${err.message}`)
+      })     
     })
     .catch(err=>{
       toast.error(`${err.message}`)
