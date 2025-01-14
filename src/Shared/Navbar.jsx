@@ -1,12 +1,22 @@
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import { FaBars, FaCoins } from 'react-icons/fa';
 import logo from '../assets/nav_logo.png'
+import useAuth from '../Hooks/useAuth';
+import toast from 'react-hot-toast';
 
 const Navbar = () => {
-  const user = false;
+  const {user, logoutUser} = useAuth();
+  const navigate = useNavigate()
 
   const handleLogOut = ()=>{
-
+    logoutUser()
+    .then(()=>{
+      toast.success('Sign out success!')
+      navigate('/')
+    })
+    .catch(err=>{
+      toast.error(`${err.message}`)
+    })
   }
 
   const links= <>
