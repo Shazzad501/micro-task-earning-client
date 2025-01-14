@@ -3,11 +3,13 @@ import { FaBars, FaCoins } from 'react-icons/fa';
 import logo from '../assets/nav_logo.png'
 import useAuth from '../Hooks/useAuth';
 import toast from 'react-hot-toast';
+import useUserByEmail from '../Hooks/useUserByEmail';
 
 const Navbar = () => {
   const {user, logoutUser} = useAuth();
   const navigate = useNavigate()
-  console.log(user)
+  const [singleUser] = useUserByEmail()
+  const {totalCoin} = singleUser || {};
   const handleLogOut = ()=>{
     logoutUser()
     .then(()=>{
@@ -38,7 +40,7 @@ const Navbar = () => {
         >Dashboard</NavLink></li>
 
        {
-        user && <li className='lg:hidden'><p className='text-base text-black flex font-bold items-center'><span className=' text-[#d3b81c] text-xl'><FaCoins/></span> 50 Coin</p></li>
+        user && <li className='lg:hidden'><p className='text-base text-black flex font-bold items-center'><span className=' text-[#d3b81c] text-xl'><FaCoins/></span> {totalCoin} Coin</p></li>
        } 
 
       {
@@ -70,7 +72,7 @@ const Navbar = () => {
             alt="user img" />
           </div>
 
-          <button className="hidden lg:flex btn font-bold text-base bg-transparent hover:bg-transparent border-gray-300 text-white"><span className='text-xl text-[#d3b81c]'><FaCoins/></span> 50 Coin</button>
+          <button className="hidden lg:flex btn font-bold text-base bg-transparent hover:bg-transparent border-gray-300 text-white"><span className='text-xl text-[#d3b81c]'><FaCoins/></span> {totalCoin} Coin</button>
 
           <button onClick={handleLogOut} className="hidden lg:flex btn font-bold text-base bg-transparent hover:bg-transparent border-gray-300 text-white">Sign Out</button>
 
