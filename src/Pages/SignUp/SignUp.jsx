@@ -7,11 +7,13 @@ import { Typewriter } from 'react-simple-typewriter';
 import { Helmet } from 'react-helmet-async';
 import useAuth from '../../Hooks/useAuth';
 import toast from 'react-hot-toast';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const {upDateProfile, newUserSet, setUser} = useAuth();
   const navigate = useNavigate()
+  const axiosSecure = useAxiosSecure()
  
   const {
     register,
@@ -25,7 +27,24 @@ const SignUp = () => {
     .then(res=>{
       upDateProfile({displayName: data.name, photoURL: data.photoUrl})
       .then(()=>{
-        toast.success('Sign Up success!')
+      })
+      .catch(err=>{
+        toast.error(`${err.message}`)
+      })
+      const userData = {
+        name: data.name,
+        userEmail: res.user?.email,
+        userPhoto: data.photoUrl,
+        role: data.role,
+        totalCoin: data.role === 'worker' ? 10 : 50
+      }
+
+      // save user info into the db
+      axiosSecure.post('/users', userData)
+      .then(res=>{
+        if(res.data.insertedId){
+          toast.success('Sign Up success!')
+        }
       })
       .catch(err=>{
         toast.error(`${err.message}`)
