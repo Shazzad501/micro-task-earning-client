@@ -1,9 +1,9 @@
 import { Link, NavLink } from 'react-router-dom';
-import { FaBars, FaShoppingCart } from 'react-icons/fa';
+import { FaBars, FaCoins } from 'react-icons/fa';
 import logo from '../assets/nav_logo.png'
 
 const Navbar = () => {
-  const user = false;
+  const user = true;
 
   const handleLogOut = ()=>{
 
@@ -27,6 +27,10 @@ const Navbar = () => {
           }`}
         >Dashboard</NavLink></li>
 
+       {
+        user && <li className='lg:hidden'><p className='text-base text-black flex font-bold items-center'><span className=' text-[#d3b81c] text-xl'><FaCoins/></span> 50 Coin</p></li>
+       } 
+
       {
         user && <li><Link onClick={handleLogOut} className="lg:hidden font-bold text-base text-black">Sign Out</Link></li> 
       } 
@@ -39,7 +43,7 @@ const Navbar = () => {
           <Link to='/'><img className='w-28 h-16' src={logo} alt="logo" /></Link>
         </div>
         <div className="navbar-center hidden lg:flex">
-          <ul className="menu menu-horizontal px-1">
+          <ul className="menu menu-horizontal px-1 flex items-center">
             {links}
           </ul>
         </div>
@@ -55,6 +59,9 @@ const Navbar = () => {
             src={user?.photoURL} 
             alt="user img" />
           </div>
+
+          <button className="hidden lg:flex btn font-bold text-base bg-transparent hover:bg-transparent border-gray-300 text-white"><span className='text-xl text-[#d3b81c]'><FaCoins/></span> 50 Coin</button>
+
           <button onClick={handleLogOut} className="hidden lg:flex btn font-bold text-base bg-transparent hover:bg-transparent border-gray-300 text-white">Sign Out</button>
 
           <Link to='/' className={`btn font-bold text-base bg-transparent  text-white hover:bg-transparent`}>Join as Dev</Link>
