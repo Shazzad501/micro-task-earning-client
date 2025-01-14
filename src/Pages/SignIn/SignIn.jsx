@@ -8,7 +8,8 @@ import loginLotti from '../../assets/signIn.json'
 import { Helmet } from 'react-helmet-async';
 import useAuth from '../../Hooks/useAuth';
 import toast from 'react-hot-toast';
-import useAxiosSecure from '../../Hooks/useAxiosSecure';
+import useAxiosPublic from '../../Hooks/useAxiosPublic';
+import useUserByEmail from '../../Hooks/useUserByEmail';
 
 const SignIn = () => {
   const {
@@ -20,9 +21,12 @@ const SignIn = () => {
   const [showPassword, setShowPassword] = useState(false);
   const {createUserWithGoogle,loginUser, setUser} = useAuth()
   const navigate = useNavigate()
-  const axiosSecure = useAxiosSecure();
+  const axiosPublic = useAxiosPublic()
+  const [singleUser] = useUserByEmail() // user get by email
+  const {userEmail} = singleUser || {};
 
   const onSubmit = (data) => {
+    // email password sign in
     loginUser(data.email, data.password)
     .then(res=>{
       setUser(res.user)
@@ -45,17 +49,21 @@ const SignIn = () => {
         role: 'worker',
         totalCoin: 10
       }
-      // now save user info into db
-      axiosSecure.post('/users', userData)
+
+      if(!userEmail === userData.userEmail){
+        // now save user info into db
+      axiosPublic.post('/users', userData)
       .then(res=>{
         if(res.data.insertedId){
-          toast.success('Google Sign Up success!')
           navigate('/dashboard')
         }
       })
       .catch(err=>{
         toast.error(`${err.message}`)
-      })     
+      })
+      } 
+      toast.success('Google Sign Up success!')
+      navigate('/dashboard')    
     })
     .catch(err=>{
       toast.error(`${err.message}`)

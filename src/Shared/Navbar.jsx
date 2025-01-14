@@ -22,22 +22,14 @@ const Navbar = () => {
   }
 
   const links= <>
-      <li><NavLink 
-      to='/'
-      className={({ isActive }) =>
-        `hover:bg-transparent hover:border-b-2 bg-transparent font-bold ${
-          isActive ? 'text-white' : 'text-[#d3b81c]'
-        }`}
-      >Home</NavLink></li> 
-
-
-     <li><NavLink 
+      
+     {user && <li><NavLink 
         to='/dashboard'
         className={({ isActive }) =>
           `hover:bg-transparent hover:border-b-2 bg-transparent font-bold ${
             isActive ? 'text-white' : 'text-[#d3b81c]'
           }`}
-        >Dashboard</NavLink></li>
+        >Dashboard</NavLink></li>}
 
        {
         user && <li className='lg:hidden'><p className='text-base text-black flex font-bold items-center'><span className=' text-[#d3b81c] text-xl'><FaCoins/></span> {totalCoin} Coin</p></li>

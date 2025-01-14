@@ -7,13 +7,13 @@ import { Typewriter } from 'react-simple-typewriter';
 import { Helmet } from 'react-helmet-async';
 import useAuth from '../../Hooks/useAuth';
 import toast from 'react-hot-toast';
-import useAxiosSecure from '../../Hooks/useAxiosSecure';
+import useAxiosPublic from '../../Hooks/useAxiosPublic';
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
   const {upDateProfile, newUserSet, setUser} = useAuth();
   const navigate = useNavigate()
-  const axiosSecure = useAxiosSecure()
+  const axiosPublic = useAxiosPublic()
  
   const {
     register,
@@ -40,7 +40,7 @@ const SignUp = () => {
       }
 
       // save user info into the db
-      axiosSecure.post('/users', userData)
+      axiosPublic.post('/users', userData)
       .then(res=>{
         if(res.data.insertedId){
           toast.success('Sign Up success!')
