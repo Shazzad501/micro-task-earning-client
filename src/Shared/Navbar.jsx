@@ -3,7 +3,7 @@ import { FaBars, FaCoins } from 'react-icons/fa';
 import logo from '../assets/nav_logo.png'
 
 const Navbar = () => {
-  const user = true;
+  const user = false;
 
   const handleLogOut = ()=>{
 
@@ -64,7 +64,7 @@ const Navbar = () => {
 
           <button onClick={handleLogOut} className="hidden lg:flex btn font-bold text-base bg-transparent hover:bg-transparent border-gray-300 text-white">Sign Out</button>
 
-          <Link to='/' className={`btn font-bold text-base bg-transparent  text-white hover:bg-transparent`}>Join as Dev</Link>
+          <Link to='https://github.com/Programming-Hero-Web-Course4/b10a12-client-side-Shazzad501' target='_blank' className={`btn font-bold text-base bg-transparent  text-white hover:bg-transparent`}>Join as Dev</Link>
           </>:<>
           <Link to='/signIn' className={`btn font-bold text-base bg-transparent  text-white hover:bg-transparent`}>Sign In</Link>
 
