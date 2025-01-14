@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import signUpLotti  from '../../assets/signUp.json'
 import Lottie from 'react-lottie-player';
 import { Link } from 'react-router-dom';
+import { Typewriter } from 'react-simple-typewriter';
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -19,9 +20,21 @@ const SignUp = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-black">
+    <div className="flex flex-col-reverse lg:flex-row justify-center items-center min-h-screen bg-black">
       <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">Sign Up</h2>
+        <h2 className="text-2xl font-bold text-center text-gray-800 mb-4">
+        <Typewriter
+                words={[
+                  "Create a new account",
+                ]}
+                loop={true}
+                cursor
+                cursorStyle="_"
+                typeSpeed={70}
+                deleteSpeed={50}
+                delaySpeed={1000}
+              />
+        </h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           {/* Name */}
           <div>
@@ -122,7 +135,7 @@ const SignUp = () => {
             Sign Up
           </button>
         </form>
-        <p className='text-center font-bold text-base mt-4'>Already Have an account <Link to='/signIn' className='underline'>Sign In</Link></p>
+        <p className='text-center text-sm mt-4'>Already Have an account? <Link to='/signIn' className='underline text-red-500'>Sign In</Link></p>
       </div>
       <div>
       <Lottie
