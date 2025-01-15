@@ -1,13 +1,19 @@
-import React from 'react';
+import { Elements } from '@stripe/react-stripe-js';
+import { loadStripe } from '@stripe/stripe-js';
 import { Helmet } from 'react-helmet-async';
+import StripeCart from './StripeCart';
 
-const PurchaseCoin = () => {
-  return (
-    <div>
-      <Helmet><title>Purchase Coin || Multi Task & Earning</title></Helmet>
-      PurchaseCoin
-    </div>
-  );
-};
+const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_Key);
+
+const PurchaseCoin = () => (
+  <div>
+    <Helmet>
+      <title>Purchase Coin || Multi Task & Earning</title>
+    </Helmet>
+    <Elements stripe={stripePromise}>
+      <StripeCart />
+    </Elements>
+  </div>
+);
 
 export default PurchaseCoin;

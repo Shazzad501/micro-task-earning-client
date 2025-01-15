@@ -44,8 +44,8 @@ const SignUp = () => {
     }
   }, [role, navigate]);
 
+  // user registration with email pass
   const onSubmit = (data) => {
-    // user registration with email pass
     newUserSet(data.email, data.password)
     .then(res=>{
       upDateProfile({displayName: data.name, photoURL: data.photoUrl})
@@ -67,13 +67,13 @@ const SignUp = () => {
       .then(res=>{
         if(res.data.insertedId){
           toast.success('Sign Up success!')
+          refetch()
         }
       })
       .catch(err=>{
         toast.error(`${err.message}`)
       })
       setUser(res.user)
-      refetch()
     })
     .catch(err=>{
       toast.error(`${err.message}`)

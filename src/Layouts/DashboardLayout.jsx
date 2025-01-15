@@ -54,10 +54,10 @@ const DashboardLayout = () => {
       </header>
 
       {/* Main Content */}
-      <div className="flex h-screen">
+      <div className="flex">
         {/* Sidebar */}
         <aside
-          className={`fixed top-0 left-0 h-full bg-black text-white p-4 z-10 transition-transform transform ${
+          className={`fixed top-0 left-0 h-auto bg-black text-white p-4 z-10 transition-transform transform ${
             isSidebarOpen ? "translate-x-0" : "-translate-x-full"
           } sm:relative sm:translate-x-0 sm:w-1/4`}
         >
@@ -121,7 +121,7 @@ const DashboardLayout = () => {
         )}
 
         {/* Main Section */}
-        <main className="flex-grow p-6 bg-gray-50 ml-0 sm:ml-auto">
+        <main className="w-full p-6 bg-gray-50 ml-0 sm:ml-auto h-auto">
           <Outlet/>
         </main>
       </div>
