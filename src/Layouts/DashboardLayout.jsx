@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import logo from '../assets/nav_logo.png'
 import useUserByEmail from '../Hooks/useUserByEmail';
 import { Link, NavLink, Outlet } from 'react-router-dom';
-import { FaAdn, FaBook, FaFacebook, FaGithub, FaHome, FaLinkedin, FaList, FaSignOutAlt, FaTasks, FaTwitter } from 'react-icons/fa';
+import { FaAdn, FaBook, FaFacebook, FaGithub, FaHistory, FaHome, FaLinkedin, FaList, FaSignOutAlt, FaTasks, FaTwitter } from 'react-icons/fa';
 import { MdAddCard } from 'react-icons/md';
 import { BiSolidPurchaseTag } from 'react-icons/bi';
 import { IoCheckmarkDoneCircle } from 'react-icons/io5';
@@ -10,8 +10,8 @@ import { FaPeopleGroup } from 'react-icons/fa6';
 
 
 const DashboardLayout = () => {
-  const [loginUser] = useUserByEmail();
-  const {name, totalCoin, role, userPhoto} = loginUser || {};
+  const [signInUser] = useUserByEmail();
+  const {name, totalCoin, role, userPhoto} = signInUser || {};
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
@@ -86,6 +86,8 @@ const DashboardLayout = () => {
             <li><NavLink to='/dashboard/buyer-task' className='font-bold text-base flex items-center gap-3'><span className='font-bold text-lg'><FaTasks/></span>My Task’s</NavLink></li>
 
             <li><NavLink to='/dashboard/purchase-coin' className='font-bold text-base flex items-center gap-3'><span className='font-bold text-lg'><BiSolidPurchaseTag/></span>Purchase Coin</NavLink></li>
+
+            <li><NavLink to='/dashboard/payment-history' className='font-bold text-base flex items-center gap-3'><span className='font-bold text-lg'><FaHistory/></span>Payment History</NavLink></li>
             </>
             }
 

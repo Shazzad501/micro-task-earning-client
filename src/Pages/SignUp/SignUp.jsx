@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import signUpLotti  from '../../assets/signUp.json'
 import Lottie from 'react-lottie-player';
@@ -8,6 +8,7 @@ import { Helmet } from 'react-helmet-async';
 import useAuth from '../../Hooks/useAuth';
 import toast from 'react-hot-toast';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
+import useUserByEmail from '../../Hooks/useUserByEmail';
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -20,6 +21,28 @@ const SignUp = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
+
+  const [signInUser, refetch] = useUserByEmail();
+  const { role } = signInUser || {};
+
+  // Navigate based on role
+  useEffect(() => {
+    if (role) {
+      switch (role) {
+        case 'admin':
+          navigate('/dashboard/admin-home');
+          break;
+        case 'buyer':
+          navigate('/dashboard/buyer-home');
+          break;
+        case 'worker':
+          navigate('/dashboard/worker-home');
+          break;
+        default:
+          navigate('/');
+      }
+    }
+  }, [role, navigate]);
 
   const onSubmit = (data) => {
     // user registration with email pass
@@ -50,7 +73,7 @@ const SignUp = () => {
         toast.error(`${err.message}`)
       })
       setUser(res.user)
-      navigate('/dashboard')
+      refetch()
     })
     .catch(err=>{
       toast.error(`${err.message}`)

@@ -16,6 +16,7 @@ import WorkerHome from "../Pages/Dashboard/Worker/WorkerHome";
 import TaskList from "../Pages/Dashboard/Worker/TaskList";
 import Submissions from "../Pages/Dashboard/Worker/Submissions";
 import WithDraw from "../Pages/Dashboard/Worker/WithDraw";
+import PaymentHistory from "../Pages/Dashboard/Buyer/PaymentHistory";
 
 
 const router = createBrowserRouter([
@@ -73,7 +74,11 @@ const router = createBrowserRouter([
         path: 'purchase-coin',
         element: <PurchaseCoin/>
       },
-
+      {
+        path: 'payment-history',
+        element: <PaymentHistory/>
+      },
+      
       // Worker routes
 
       {

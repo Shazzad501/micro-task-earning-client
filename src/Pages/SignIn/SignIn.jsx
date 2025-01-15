@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaGoogle } from 'react-icons/fa';
 import Lottie from 'react-lottie-player';
@@ -22,22 +22,44 @@ const SignIn = () => {
   const {createUserWithGoogle,loginUser, setUser} = useAuth()
   const navigate = useNavigate()
   const axiosPublic = useAxiosPublic()
-  const [singleUser] = useUserByEmail() // user get by email
-  const {userEmail} = singleUser || {};
+  const [signInUser, refetch] = useUserByEmail();
+  const { userEmail, role } = signInUser || {};
 
+  // Navigate based on role
+  useEffect(() => {
+    if (role) {
+      switch (role) {
+        case 'admin':
+          navigate('/dashboard/admin-home');
+          break;
+        case 'buyer':
+          navigate('/dashboard/buyer-home');
+          break;
+        case 'worker':
+          navigate('/dashboard/worker-home');
+          break;
+        default:
+          navigate('/');
+      }
+    }
+  }, [role, navigate]);
+
+
+  // email pass login
   const onSubmit = (data) => {
     // email password sign in
     loginUser(data.email, data.password)
     .then(res=>{
       setUser(res.user)
-      navigate('/dashboard')
       toast.success('Sign In success!')
+      refetch()
     })
     .catch(err=>{
       toast.error(`${err.message}`)
     })
   };
 
+  // google login
   const handleGoogleSignIn = () => {
     createUserWithGoogle()
     .then(res=>{
@@ -55,7 +77,7 @@ const SignIn = () => {
       axiosPublic.post('/users', userData)
       .then(res=>{
         if(res.data.insertedId){
-          navigate('/dashboard')
+        toast.success('Now you are our worker')
         }
       })
       .catch(err=>{
@@ -63,7 +85,7 @@ const SignIn = () => {
       })
       } 
       toast.success('Google Sign Up success!')
-      navigate('/dashboard')    
+      refetch();
     })
     .catch(err=>{
       toast.error(`${err.message}`)
