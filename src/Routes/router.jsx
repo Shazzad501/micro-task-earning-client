@@ -5,6 +5,17 @@ import Error from "../Pages/Error/Error";
 import Home from "../Pages/Home/Home";
 import SignUp from "../Pages/SignUp/SignUp";
 import SignIn from "../Pages/SignIn/SignIn";
+import AdminHome from "../Pages/Dashboard/Admin/AdminHome";
+import ManageUsers from "../Pages/Dashboard/Admin/ManageUsers";
+import ManageTasks from "../Pages/Dashboard/Admin/ManageTasks";
+import BuyerHome from "../Pages/Dashboard/Buyer/BuyerHome";
+import AddNewTask from "../Pages/Dashboard/Buyer/AddNewTask";
+import MyTasks from "../Pages/Dashboard/Buyer/MyTasks";
+import PurchaseCoin from "../Pages/Dashboard/Buyer/PurchaseCoin";
+import WorkerHome from "../Pages/Dashboard/Worker/WorkerHome";
+import TaskList from "../Pages/Dashboard/Worker/TaskList";
+import Submissions from "../Pages/Dashboard/Worker/Submissions";
+import WithDraw from "../Pages/Dashboard/Worker/WithDraw";
 
 
 const router = createBrowserRouter([
@@ -29,7 +40,59 @@ const router = createBrowserRouter([
   },
   {
     path: 'dashboard',
-    element: <DashboardLayout/>
+    element: <DashboardLayout/>,
+    children: [
+      // Admin routes
+      {
+        path: 'admin-home',
+        element: <AdminHome/>
+      },
+      {
+        path: 'manage-users',
+        element: <ManageUsers/>
+      },
+      {
+        path: 'manage-task',
+        element: <ManageTasks/>
+      },
+
+      // Buyer routes
+      {
+        path: 'buyer-home',
+        element: <BuyerHome/>
+      },
+      {
+        path: 'add-task',
+        element: <AddNewTask/>
+      },
+      {
+        path: 'buyer-task',
+        element: <MyTasks/>
+      },
+      {
+        path: 'purchase-coin',
+        element: <PurchaseCoin/>
+      },
+
+      // Worker routes
+
+      {
+        path: 'worker-home',
+        element:<WorkerHome/>
+      },
+      {
+        path: 'task-list',
+        element:<TaskList/>
+      },
+      {
+        path: 'worker-submission',
+        element:<Submissions/>
+      },
+      {
+        path: 'withdraw',
+        element:<WithDraw/>
+      },
+    ]
   }
 ]);
 

@@ -6,14 +6,14 @@ const useUserByEmail = () => {
   const {user} = useAuth()
   const axiosSecure = useAxiosSecure()
 
-  const {data: sigleUser={}, refetch, isPending: sigleUserPending} = useQuery({
-    queryKey: [user?.email, 'sigleUser'],
+  const {data: loginUser={}, refetch, isPending: loginUserPending} = useQuery({
+    queryKey: [user?.email, 'loginUser'],
     queryFn: async()=>{
       const res = await axiosSecure.get(`/users/${user?.email}`)
       return res.data;
     }
   })
-  return [sigleUser, refetch, sigleUserPending]
+  return [loginUser, refetch, loginUserPending]
 };
 
 export default useUserByEmail;

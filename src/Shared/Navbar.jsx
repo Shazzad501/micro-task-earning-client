@@ -8,8 +8,8 @@ import useUserByEmail from '../Hooks/useUserByEmail';
 const Navbar = () => {
   const {user, logoutUser} = useAuth();
   const navigate = useNavigate()
-  const [singleUser] = useUserByEmail()
-  const {totalCoin} = singleUser || {};
+  const [signInUser] = useUserByEmail()
+  const {totalCoin, role} = signInUser || {};
   const handleLogOut = ()=>{
     logoutUser()
     .then(()=>{
@@ -23,13 +23,31 @@ const Navbar = () => {
 
   const links= <>
       
-     {user && <li><NavLink 
-        to='/dashboard'
+     {user && <li>
+      {role === 'admin' && <NavLink 
+        to='/dashboard/admin-home'
         className={({ isActive }) =>
-          `hover:bg-transparent hover:border-b-2 bg-transparent font-bold ${
+          `hover:bg-transparent hover:border-b-2 bg-transparent font-bold md:hidden ${
             isActive ? 'text-white' : 'text-[#d3b81c]'
           }`}
-        >Dashboard</NavLink></li>}
+        >Dashboard</NavLink>}
+
+        {role === 'buyer' && <NavLink 
+        to='/dashboard/buyer-home'
+        className={({ isActive }) =>
+          `hover:bg-transparent hover:border-b-2 bg-transparent font-bold md:hidden ${
+            isActive ? 'text-white' : 'text-[#d3b81c]'
+          }`}
+        >Dashboard</NavLink>}
+
+        {role === 'worker' && <NavLink 
+        to='/dashboard/worker-home'
+        className={({ isActive }) =>
+          `hover:bg-transparent hover:border-b-2 bg-transparent font-bold md:hidden ${
+            isActive ? 'text-white' : 'text-[#d3b81c]'
+          }`}
+        >Dashboard</NavLink>}
+        </li>}
 
        {
         user && <li className='lg:hidden'><p className='text-base text-black flex font-bold items-center'><span className=' text-[#d3b81c] text-xl'><FaCoins/></span> {totalCoin} Coin</p></li>
@@ -37,7 +55,9 @@ const Navbar = () => {
 
       {
         user && <li><Link onClick={handleLogOut} className="lg:hidden font-bold text-base text-black">Sign Out</Link></li> 
-      } 
+      }
+      
+      <li><Link to='https://github.com/Programming-Hero-Web-Course4/b10a12-client-side-Shazzad501' target='_blank' className={`font-bold text-base bg-transparent  text-black hover:bg-transparent lg:hidden`}>Join as Dev</Link></li> 
 
   </>
   return (
@@ -55,6 +75,27 @@ const Navbar = () => {
        
         {
           user?<>
+          
+          <div>
+          {
+            role === 'admin' && <Link to={'/dashboard/admin-home'}><button className="hidden lg:flex btn font-bold text-base bg-transparent hover:bg-transparent border-gray-300 text-white">Dashboard</button></Link>
+          }
+
+          {
+            role === 'buyer' && <Link to={'/dashboard/buyer-home'}><button className="hidden lg:flex btn font-bold text-base bg-transparent hover:bg-transparent border-gray-300 text-white">Dashboard</button></Link>
+          }
+
+          {
+            role === 'worker' && <Link to={'/dashboard/worker-home'}><button className="hidden lg:flex btn font-bold text-base bg-transparent hover:bg-transparent border-gray-300 text-white">Dashboard</button></Link>
+          }
+          </div>
+          
+          <button className="hidden lg:flex btn font-bold text-base bg-transparent hover:bg-transparent border-gray-300 text-white"><span className='text-xl text-[#d3b81c]'><FaCoins/></span> {totalCoin} Coin</button>
+
+          <button onClick={handleLogOut} className="hidden lg:flex btn font-bold text-base bg-transparent hover:bg-transparent border-gray-300 text-white">Sign Out</button>
+
+          <Link to='https://github.com/Programming-Hero-Web-Course4/b10a12-client-side-Shazzad501' target='_blank' className={`btn font-bold text-base bg-transparent  text-white hover:bg-transparent hidden lg:flex`}>Join as Dev</Link>
+          
           <div 
            title={user?.displayName}
           className='rounded-full h-12 w-12 border-2 overflow-hidden'>
@@ -63,12 +104,6 @@ const Navbar = () => {
             src={user?.photoURL} 
             alt="user img" />
           </div>
-
-          <button className="hidden lg:flex btn font-bold text-base bg-transparent hover:bg-transparent border-gray-300 text-white"><span className='text-xl text-[#d3b81c]'><FaCoins/></span> {totalCoin} Coin</button>
-
-          <button onClick={handleLogOut} className="hidden lg:flex btn font-bold text-base bg-transparent hover:bg-transparent border-gray-300 text-white">Sign Out</button>
-
-          <Link to='https://github.com/Programming-Hero-Web-Course4/b10a12-client-side-Shazzad501' target='_blank' className={`btn font-bold text-base bg-transparent  text-white hover:bg-transparent`}>Join as Dev</Link>
           </>:<>
           <Link to='/signIn' className={`btn font-bold text-base bg-transparent  text-white hover:bg-transparent`}>Sign In</Link>
 
