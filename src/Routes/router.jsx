@@ -18,6 +18,7 @@ import Submissions from "../Pages/Dashboard/Worker/Submissions";
 import WithDraw from "../Pages/Dashboard/Worker/WithDraw";
 import PaymentHistory from "../Pages/Dashboard/Buyer/PaymentHistory";
 import PrivateRoute from "./PrivateRoute";
+import BuyerRoute from "./BuyerRoute";
 
 
 const router = createBrowserRouter([

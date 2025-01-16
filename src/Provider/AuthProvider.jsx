@@ -50,7 +50,7 @@ const AuthProvider = ({children}) => {
   useEffect(()=>{
     const unSubscribe = onAuthStateChanged(auth, (currentUser)=>{
       setUser(currentUser);
-
+      // jwt token
       if(currentUser){
         // user info
         const userInfo = {email: currentUser.email}
