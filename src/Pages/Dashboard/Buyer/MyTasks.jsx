@@ -11,7 +11,8 @@ const MyTasks = () => {
   const { userEmail } = signInUser || {};
   const axiosSecure = useAxiosSecure();
 
-  const { data: tasks = [] } = useQuery({
+  // fetch data into db
+  const { data: tasks = [], refetch: taskRefetch} = useQuery({
     queryKey: [userEmail, 'tasks'],
     queryFn: async () => {
       const res = await axiosSecure.get(`/tasks/${userEmail}`);
@@ -38,7 +39,7 @@ const MyTasks = () => {
 
   // Handle task deletion
   const handleDelete = (task) => {
-    const { _id, totalPayableCoin } = task || {};
+    const { _id } = task || {};
 
     Swal.fire({
       title: 'Are you sure?',
@@ -51,27 +52,17 @@ const MyTasks = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axiosSecure
-          .delete(`/tasks/${_id}`)
+          .delete(`/tasks/${_id}`, { data: { userEmail } })
           .then((res) => {
-            if (res.data.deletedCount > 0) {
-              // Refill coins only if deletion was successful
-              axiosSecure
-                .patch(`/users/increaseCoin/${userEmail}`, {
-                  refillAmount: totalPayableCoin,
-                })
-                .then((res) => {
-                  if (res.data.modifiedCount > 0) {
-                    refetch();
-                    Swal.fire({
-                      title: 'Deleted!',
-                      text: 'Your task has been deleted and coins refilled.',
-                      icon: 'success',
-                    });
-                  }
-                })
-                .catch((err) => {
-                  toast.error(`Error refilling coins: ${err.message}`);
-                });
+            const [deleteResult, updateResult] = res.data;
+            if (deleteResult.deletedCount > 0 && updateResult.modifiedCount > 0) {
+              refetch();
+              taskRefetch()
+              Swal.fire({
+                  title: 'Deleted!',
+                  text: 'Your task has been deleted and coins refilled.',
+                  icon: 'success',
+              });
             } else {
               toast.error('Error deleting task');
             }
@@ -84,24 +75,24 @@ const MyTasks = () => {
   };
 
   // Handle saving task updates
-  const handleSaveUpdate = async () => {
-    try {
+  const handleSaveUpdate = () => {
     const { _id, ...updatedTask } = taskToUpdate;
     updatedTask.task_title = updatedTitle;
     updatedTask.task_detail = updatedTaskDetail;
     updatedTask.submission_details = updatedSubmissionDetails;
 
-      const res = await axiosSecure.patch(`/tasks/${taskToUpdate._id}`, updatedTask);
-
-      if (res.data.modifiedCount > 0) {
-        setIsModalOpen(false);
-        setTaskToUpdate(null);
-        refetch();
-        toast.success('Task updated successfully!');
-      }
-    } catch (err) {
+      axiosSecure.patch(`/tasks/${taskToUpdate._id}`, updatedTask)
+      .then(res=>{
+        if (res.data.modifiedCount > 0) {
+          setIsModalOpen(false);
+          setTaskToUpdate(null);
+          refetch();
+          toast.success('Task updated successfully!');
+        }
+      })
+     .catch (err =>{
       toast.error(`Error updating task: ${err.message}`);
-    }
+    })
   };
 
   // Close modal
