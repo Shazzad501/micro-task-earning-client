@@ -6,8 +6,6 @@ import toast from 'react-hot-toast';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import useUserByEmail from '../../../Hooks/useUserByEmail';
 
-// Initialize Stripe
-const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_Key);
 
 // Coin packages
 const packages = [
@@ -19,9 +17,9 @@ const packages = [
 
 const StripeCart = () => {
   const axiosSecure = useAxiosSecure();
-  const [signInUser] = useUserByEmail();
-  const { _id } = signInUser || {};
-  const userId = _id;
+  const [signInUser, refetch] = useUserByEmail();
+  const { _id, name, userEmail, userPhoto } = signInUser || {};
+
 
   const stripe = useStripe();
   const elements = useElements();
@@ -53,7 +51,8 @@ const StripeCart = () => {
       // Request backend to create a payment intent
       const { data } = await axiosSecure.post('/create-payment-intent', {
         amount: selectedPackage.amount,
-        userId,
+        buyerId: _id,
+        buyerEmail: userEmail,
       });
 
       // Confirm the payment
@@ -64,15 +63,17 @@ const StripeCart = () => {
       });
 
       if (result.error) {
-        console.error(result.error);
         toast.error(result.error.message || 'Payment failed. Please try again.');
       } else if (result.paymentIntent.status === 'succeeded') {
         // Notify the backend about the successful payment
         await axiosSecure.post('/payment-success', {
           paymentIntentId: result.paymentIntent.id,
-          userId,
+          buyerId: _id,
+          buyerEmail: userEmail,
+          buyerName: name,
+          buyerPhoto: userPhoto,
         });
-
+        refetch()
         toast.success('Payment successful! Coins added to your account.');
       }
     } catch (err) {
@@ -83,7 +84,7 @@ const StripeCart = () => {
   };
 
   return (
-    <Elements stripe={stripePromise}>
+    <div>
       <Helmet>
         <title>Purchase Coins || Multi Task & Earning</title>
       </Helmet>
@@ -123,7 +124,7 @@ const StripeCart = () => {
           </div>
         )}
       </div>
-    </Elements>
+      </div>
   );
 };
 

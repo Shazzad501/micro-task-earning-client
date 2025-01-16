@@ -3,7 +3,7 @@ import { loadStripe } from '@stripe/stripe-js';
 import { Helmet } from 'react-helmet-async';
 import StripeCart from './StripeCart';
 
-const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_Key);
+const stripePromise = loadStripe(import.meta.env.VITE_Payment_Publish_Key);
 
 const PurchaseCoin = () => (
   <div>
