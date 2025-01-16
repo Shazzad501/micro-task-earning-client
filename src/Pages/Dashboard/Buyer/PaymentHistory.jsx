@@ -12,7 +12,7 @@ const PaymentHistory = () => {
   const { data: paymentHistory = [] } = useQuery({
     queryKey: [_id, 'paymentHistory'],
     queryFn: async () => {
-      const res = await axiosSecure(`/payments/${_id}`);
+      const res = await axiosSecure.get(`/payments/${_id}`);
       return res.data;
     },
     enabled: !!_id,
