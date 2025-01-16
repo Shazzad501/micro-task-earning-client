@@ -3,11 +3,13 @@ import { createContext, useEffect, useState } from "react";
 
 // import axios from "axios";
 import auth from "../firebase/firebase.config";
+import useAxiosPublic from "../Hooks/useAxiosPublic";
 
 export const AuthContext = createContext()
 const AuthProvider = ({children}) => {
   const [user, setUser] = useState(null)
   const [loading, setLoading] = useState(true)
+  const axiosPublic = useAxiosPublic()
 
   // create googleProvider
   const googleProvider = new GoogleAuthProvider()
@@ -49,21 +51,21 @@ const AuthProvider = ({children}) => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser)=>{
       setUser(currentUser);
 
-      // if(currentUser?.email){
-      //   const user = {email: currentUser.email}
-        
-      //   axios.post('https://service-review-server-navy.vercel.app/jwt', user, {withCredentials: true})
-      //   .then(res=>{
-      //     setLoading(false)
-      //   })
-      // }
-      // else{
-      //   axios.post('https://service-review-server-navy.vercel.app/logout', {}, {withCredentials: true})
-      //   .then(res=> {
-      //     setLoading(false)
-      // })
-      // }
-      setLoading(false)
+      if(currentUser){
+        // user info
+        const userInfo = {email: currentUser.email}
+        axiosPublic.post('/jwt', userInfo)
+        .then(res=>{
+          if(res.data.token){
+            localStorage.setItem('access-token', res.data.token);
+            setLoading(false)
+          }
+        })
+      }
+      else{
+        localStorage.removeItem('access-token')
+        setLoading(false);
+      }
     })
 
     return()=>{

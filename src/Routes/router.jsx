@@ -17,6 +17,7 @@ import TaskList from "../Pages/Dashboard/Worker/TaskList";
 import Submissions from "../Pages/Dashboard/Worker/Submissions";
 import WithDraw from "../Pages/Dashboard/Worker/WithDraw";
 import PaymentHistory from "../Pages/Dashboard/Buyer/PaymentHistory";
+import PrivateRoute from "./PrivateRoute";
 
 
 const router = createBrowserRouter([
@@ -60,23 +61,23 @@ const router = createBrowserRouter([
       // Buyer routes
       {
         path: 'buyer-home',
-        element: <BuyerHome/>
+        element: <PrivateRoute><BuyerHome/></PrivateRoute>
       },
       {
         path: 'add-task',
-        element: <AddNewTask/>
+        element: <PrivateRoute><AddNewTask/></PrivateRoute>
       },
       {
         path: 'buyer-task',
-        element: <MyTasks/>
+        element: <PrivateRoute><MyTasks/></PrivateRoute>
       },
       {
         path: 'purchase-coin',
-        element: <PurchaseCoin/>
+        element: <PrivateRoute><PurchaseCoin/></PrivateRoute>
       },
       {
         path: 'payment-history',
-        element: <PaymentHistory/>
+        element: <PrivateRoute><PaymentHistory/></PrivateRoute>
       },
       
       // Worker routes
