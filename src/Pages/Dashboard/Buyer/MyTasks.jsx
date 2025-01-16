@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import useUserByEmail from '../../../Hooks/useUserByEmail';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
+import Swal from 'sweetalert2';
 
 const MyTasks = () => {
   const [signInUser, refetch] = useUserByEmail();
@@ -18,12 +20,94 @@ const MyTasks = () => {
     enabled: !!userEmail,
   });
 
+  // State for managing the task update form and modal visibility
+  const [taskToUpdate, setTaskToUpdate] = useState(null);
+  const [updatedTitle, setUpdatedTitle] = useState('');
+  const [updatedTaskDetail, setUpdatedTaskDetail] = useState('');
+  const [updatedSubmissionDetails, setUpdatedSubmissionDetails] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // Function to handle task update
   const handleUpdate = (task) => {
-    // Handle task update
+    setTaskToUpdate(task);
+    setUpdatedTitle(task.task_title);
+    setUpdatedTaskDetail(task.task_detail);
+    setUpdatedSubmissionDetails(task.submission_info);
+    setIsModalOpen(true);
   };
 
-  const handleDelete = async (taskId) => {
-    // Handle task deletion
+  // Handle task deletion
+  const handleDelete = (task) => {
+    const { _id, totalPayableCoin } = task || {};
+
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure
+          .delete(`/tasks/${_id}`)
+          .then((res) => {
+            if (res.data.deletedCount > 0) {
+              // Refill coins only if deletion was successful
+              axiosSecure
+                .patch(`/users/increaseCoin/${userEmail}`, {
+                  refillAmount: totalPayableCoin,
+                })
+                .then((res) => {
+                  if (res.data.modifiedCount > 0) {
+                    refetch();
+                    Swal.fire({
+                      title: 'Deleted!',
+                      text: 'Your task has been deleted and coins refilled.',
+                      icon: 'success',
+                    });
+                  }
+                })
+                .catch((err) => {
+                  toast.error(`Error refilling coins: ${err.message}`);
+                });
+            } else {
+              toast.error('Error deleting task');
+            }
+          })
+          .catch((err) => {
+            toast.error(`Error deleting task: ${err.message}`);
+          });
+      }
+    });
+  };
+
+  // Handle saving task updates
+  const handleSaveUpdate = async () => {
+    try {
+    const { _id, ...updatedTask } = taskToUpdate;
+    updatedTask.task_title = updatedTitle;
+    updatedTask.task_detail = updatedTaskDetail;
+    updatedTask.submission_details = updatedSubmissionDetails;
+
+      const res = await axiosSecure.patch(`/tasks/${taskToUpdate._id}`, updatedTask);
+
+      if (res.data.modifiedCount > 0) {
+        setIsModalOpen(false);
+        setTaskToUpdate(null);
+        refetch();
+        toast.success('Task updated successfully!');
+      }
+    } catch (err) {
+      toast.error(`Error updating task: ${err.message}`);
+    }
+  };
+
+  // Close modal
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setTaskToUpdate(null);
   };
 
   return (
@@ -31,7 +115,9 @@ const MyTasks = () => {
       <Helmet>
         <title>Buyer Task || Multi Task & Earning</title>
       </Helmet>
-      <h1 className="text-3xl font-semibold mb-6 text-gray-800">Your Buyer Tasks</h1>
+      <h1 className="text-3xl font-semibold mb-6 text-gray-800 text-center">Your Tasks</h1>
+
+      {/* Tasks Table */}
       <div className="overflow-x-auto bg-white rounded-lg shadow-md">
         <table className="min-w-full table-auto">
           <thead>
@@ -71,7 +157,7 @@ const MyTasks = () => {
                       Update
                     </button>
                     <button
-                      onClick={() => handleDelete(task._id)}
+                      onClick={() => handleDelete(task)}
                       className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300 ml-2"
                     >
                       Delete
@@ -89,8 +175,54 @@ const MyTasks = () => {
           </tbody>
         </table>
       </div>
+
+      {/* Modal for Task Update */}
+      {isModalOpen && taskToUpdate && (
+        <div className="fixed inset-0 flex justify-center items-center bg-black bg-opacity-50 z-50">
+          <div className="bg-white p-6 rounded-lg shadow-md w-1/3">
+            <h2 className="text-2xl font-semibold mb-4">Update Task</h2>
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2">Task Title</label>
+              <input
+                type="text"
+                value={updatedTitle}
+                onChange={(e) => setUpdatedTitle(e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2">Task Details</label>
+              <textarea
+                value={updatedTaskDetail}
+                onChange={(e) => setUpdatedTaskDetail(e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2">Submission Details</label>
+              <textarea
+                value={updatedSubmissionDetails}
+                onChange={(e) => setUpdatedSubmissionDetails(e.target.value)}
+                className="w-full p-2 border border-gray-300 rounded"
+              />
+            </div>
+            <button
+              onClick={handleSaveUpdate}
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300"
+            >
+              Save Changes
+            </button>
+            <button
+              onClick={closeModal}
+              className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition duration-300 ml-2"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
-export default MyTasks;
+export default MyTasks
