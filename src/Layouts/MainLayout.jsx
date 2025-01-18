@@ -10,7 +10,9 @@ const MainLayout = () => {
     <div>
       {/* navbar */}
       {signInSignUpPage || <Navbar/>}
+      <div className='min-h-screen'>
       <Outlet/>
+      </div>
       {/* footer */}
       {signInSignUpPage || <Footer/>}
     </div>

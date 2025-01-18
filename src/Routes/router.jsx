@@ -19,6 +19,7 @@ import WithDraw from "../Pages/Dashboard/Worker/WithDraw";
 import PaymentHistory from "../Pages/Dashboard/Buyer/PaymentHistory";
 import PrivateRoute from "./PrivateRoute";
 import BuyerRoute from "./BuyerRoute";
+import TaskDetails from "../Pages/Dashboard/Worker/TaskDetails";
 
 
 const router = createBrowserRouter([
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: 'signIn',
         element: <SignIn/>
+      },
+      {
+        path: 'tasks/:id',
+        element: <TaskDetails/>
       }
     ]
   },
@@ -98,7 +103,7 @@ const router = createBrowserRouter([
       {
         path: 'withdraw',
         element:<WithDraw/>
-      },
+      }
     ]
   }
 ]);
