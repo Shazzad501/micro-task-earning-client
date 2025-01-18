@@ -10,6 +10,7 @@ import useAuth from '../../Hooks/useAuth';
 import toast from 'react-hot-toast';
 import useAxiosPublic from '../../Hooks/useAxiosPublic';
 import useUserByEmail from '../../Hooks/useUserByEmail';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
 
 const SignIn = () => {
   const {
@@ -22,8 +23,10 @@ const SignIn = () => {
   const {createUserWithGoogle,loginUser, setUser} = useAuth()
   const navigate = useNavigate()
   const axiosPublic = useAxiosPublic()
+  const axiosSecure = useAxiosSecure()
   const [signInUser, refetch] = useUserByEmail();
   const { userEmail, role } = signInUser || {};
+
 
   // Navigate based on role
   useEffect(() => {
@@ -51,7 +54,7 @@ const SignIn = () => {
     loginUser(data.email, data.password)
     .then(res=>{
       setUser(res.user)
-      toast.success('Sign In success!')
+      toast.success(`Wellcome back! ${res.user?.displayName}`)
       refetch()
     })
     .catch(err=>{
@@ -63,28 +66,38 @@ const SignIn = () => {
   const handleGoogleSignIn = () => {
     createUserWithGoogle()
     .then(res=>{
-      setUser(res.user);
+      setUser(res.user); 
+      refetch()
       const userData = {
-        name: res.user?.displayName,
-        userEmail: res.user?.email,
-        userPhoto: res.user?.photoURL,
+        name: res.user.displayName,
+        userEmail: res.user.email,
+        userPhoto: res.user.photoURL,
         role: 'worker',
         totalCoin: 10
       }
 
-      if(!userEmail === userData.userEmail){
-        // now save user info into db
-      axiosPublic.post('/users', userData)
+      axiosPublic.get(`/users/${userData.userEmail}`)
       .then(res=>{
-        if(res.data.insertedId){
-        toast.success('Now you are our worker')
+        if(!res.data){
+           // now save user info into db
+           axiosPublic.post('/users', userData)
+           .then(res=>{
+             if(res.data.insertedId){
+             toast.success('Now you are our worker')
+             }
+           })
+           .catch(err=>{
+             toast.error(`${err.message}`)
+           })
+        }
+        else{
+          toast.success(`Wellcome back ${userData.name}`)
         }
       })
-      .catch(err=>{
+      .catch(err =>{
         toast.error(`${err.message}`)
       })
-      } 
-      toast.success('Google Sign Up success!')
+      toast.success('Google Sign In success!')
       refetch();
     })
     .catch(err=>{
