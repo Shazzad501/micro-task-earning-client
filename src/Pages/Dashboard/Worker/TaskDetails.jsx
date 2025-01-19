@@ -59,7 +59,7 @@ const TaskDetails = () => {
     }
 
     try {
-      const response = await axiosSecure.post('/submissions', submitableTask);
+      const response = await axiosSecure.post('/submission', submitableTask);
 
       if(response.data.insertedId){
         toast.success('Task Submited!')
