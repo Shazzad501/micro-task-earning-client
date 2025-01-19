@@ -4,24 +4,57 @@ import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import { AiOutlineDelete } from 'react-icons/ai';
 import { FaCoins } from 'react-icons/fa';
+import toast from 'react-hot-toast';
+import Swal from 'sweetalert2';
 
 const ManageTasks = () => {
   const axiosSecure = useAxiosSecure();
 
-  const { data: tasks = [] } = useQuery({
+  const { data: tasks = [], refetch } = useQuery({
     queryKey: ['tasks'],
     queryFn: async () => {
-      const res = await axiosSecure.get('/api/tasks'); // Replace with your API endpoint
+      const res = await axiosSecure.get('/tasks');
       return res.data;
     },
   });
+
+  // handle delete task
+  const handleDeleteTask = (taskId)=>{
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be delete this task!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/admindeletetask/${taskId}`)
+        .then(res=>{
+          if(res.data.deletedCount){
+            Swal.fire({
+              title: "Deleted!",
+              text: "Task has been deleted.",
+              icon: "success"
+            });
+            refetch();
+            toast.success(`Task has been deleted`)
+          }
+        })
+        .catch(err=>{
+          toast.error(`Try again later. ${err.message}`)
+        })
+      }
+    });
+  }
 
   return (
     <div className="container mx-auto px-4 py-8">
       <Helmet>
         <title>Manage Tasks (Admin View)</title>
       </Helmet>
-      <h2 className="text-2xl font-bold mb-4">Task List (Admin View)</h2>
+      <h2 className="text-2xl font-bold mb-4">Task List</h2>
       <table className="w-full rounded-md shadow-md">
         <thead>
           <tr className="text-left bg-gray-100 text-gray-600 font-medium">

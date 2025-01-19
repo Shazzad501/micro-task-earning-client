@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import logo from '../assets/nav_logo.png'
 import useUserByEmail from '../Hooks/useUserByEmail';
 import { Link, NavLink, Outlet } from 'react-router-dom';
-import { FaAdn, FaBook, FaFacebook, FaGithub, FaHistory, FaHome, FaLinkedin, FaList, FaSignOutAlt, FaTasks, FaTwitter } from 'react-icons/fa';
+import {  FaFacebook, FaGithub, FaHistory, FaHome, FaLinkedin, FaList, FaSignOutAlt, FaTasks, FaTwitter } from 'react-icons/fa';
 import { MdAddCard } from 'react-icons/md';
 import { BiSolidPurchaseTag } from 'react-icons/bi';
 import { IoCheckmarkDoneCircle } from 'react-icons/io5';
@@ -98,7 +98,7 @@ const DashboardLayout = () => {
 
               <li><NavLink to='/dashboard/manage-users' className='font-bold text-base flex items-center gap-3'><span className='font-bold text-lg'><FaPeopleGroup/></span>Manage  Users</NavLink></li>
 
-              <li><NavLink to='/dashboard/manage-task' className='font-bold text-base flex items-center gap-3'><span className='font-bold text-lg'><FaTasks/></span>My Task’s</NavLink></li>
+              <li><NavLink to='/dashboard/manage-task' className='font-bold text-base flex items-center gap-3'><span className='font-bold text-lg'><FaTasks/></span>Manage Task’s</NavLink></li>
 
               </>
             }
