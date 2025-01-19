@@ -4,7 +4,6 @@ import useUserByEmail from '../../../Hooks/useUserByEmail';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import { TableContainer, TableHead, Table, TableBody, TableRow, TableCell, CircularProgress } from '@mui/material';
-import Loading from '../../../Shared/Loading';
 
 const Submissions = () => {
   const axiosSecure = useAxiosSecure();
