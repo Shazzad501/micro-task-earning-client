@@ -25,7 +25,7 @@ const ManageUsers = () => {
       toast.error(`You don't have removed yourself!`)
       return;
     };
-    
+
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be remove this user!",
@@ -55,16 +55,18 @@ const ManageUsers = () => {
     });
   };
 
-  const handleUserRoleChange = async (userId, newRole) => {
-    try {
-      await axiosSecure.put(`/users/${userId}`, { role: newRole });
-      setSelectedUser(null);
-      refetch();
-      toast.success('User role updated successfully!');
-    } catch (error) {
-      console.error('Error updating user role:', error);
-      toast.error('Error updating user role!');
-    }
+  const handleUserRoleChange = (userId, newRole) => {
+    axiosSecure.put(`/updaterole/${userId}`, { role: newRole })
+    .then(res=>{
+      if(res.data.modifiedCount){
+        setSelectedUser(null);
+        refetch();
+        toast.success('User role updated successfully!');
+      }
+    })  
+    .catch (error=>{
+      toast.error(`Try after ${error.message}`);
+    })
   };
 
   return (
