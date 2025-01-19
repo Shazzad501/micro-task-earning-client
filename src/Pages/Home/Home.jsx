@@ -1,6 +1,8 @@
 import React from 'react';
 import Slider from './Slider';
 import { Helmet } from 'react-helmet-async';
+import Testimonials from './Testimonials';
+
 
 const Home = () => {
   return (
@@ -9,6 +11,8 @@ const Home = () => {
         <title>Home || Multi Task & Earning</title>
       </Helmet>
       <Slider/>
+      <Testimonials/>
+
     </div>
   );
 };
