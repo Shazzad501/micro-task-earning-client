@@ -18,10 +18,10 @@ const TaskDetails = () => {
   const { isLoading, error, data: task = {} } = useQuery({
     queryKey: [id, 'task'],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/tasks/${id}`);
+      const res = await axiosSecure.get(`/singletasks/${id}`);
       return res.data;
     },
-    enabled: !!id,
+    // enabled: !!id,
   });
 
   const {
