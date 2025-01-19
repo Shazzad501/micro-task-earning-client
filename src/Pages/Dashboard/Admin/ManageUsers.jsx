@@ -9,7 +9,7 @@ import useUserByEmail from '../../../Hooks/useUserByEmail';
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
   const [signInUser] = useUserByEmail();
-  const {_id} = signInUser || {};
+  const {_id, role} = signInUser || {};
   const [selectedUser, setSelectedUser] = useState(null);
 
   const { data: users = [], refetch } = useQuery({
@@ -56,6 +56,11 @@ const ManageUsers = () => {
   };
 
   const handleUserRoleChange = (userId, newRole) => {
+    if(userId === _id){
+      toast.error(`You don't have change your role!`)
+      refetch()
+      return;
+    }
     axiosSecure.put(`/updaterole/${userId}`, { role: newRole })
     .then(res=>{
       if(res.data.modifiedCount){
