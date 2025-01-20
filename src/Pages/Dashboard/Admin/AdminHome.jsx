@@ -3,11 +3,26 @@ import { Helmet } from 'react-helmet-async';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
+import Loading from '../../../Shared/Loading';
+import { FaCoins } from 'react-icons/fa';
 
 const AdminHome = () => {
   const axiosSecure = useAxiosSecure();
   const [selectedWithdrawal, setSelectedWithdrawal] = useState(null);
 
+  // Fetch admin stats using TanStack Query
+  const { data: adminStats, isLoading: isStatsLoading} = useQuery({
+    queryKey: ['admin-stats'],
+    queryFn: async () => {
+      const res = await axiosSecure.get('/admin-stats');
+      return res.data.stats;
+    },
+    onError: () => {
+      toast.error('Failed to fetch admin stats.');
+    },
+  });
+
+  // get withdrawals
   const { data: withdrawals = [],refetch } = useQuery({
     queryKey: ['withdrawals'],
     queryFn: async () => {
@@ -36,10 +51,35 @@ const AdminHome = () => {
       <Helmet>
         <title>Admin Home || Multi Task & Earning</title>
       </Helmet>
-      {/* Admin stats */}
-      <div>
-        <h2>Admin stats</h2>
-      </div>
+     {/* Admin stats */}
+        <div className="bg-gray-100 p-4 rounded-md shadow-md mb-6">
+          {isStatsLoading ? (
+            <Loading />
+          ) : (
+            adminStats && (
+              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="bg-white p-4 rounded-md shadow">
+                  <h3 className="text-lg font-semibold">Total Workers</h3>
+                  <p className="text-2xl font-bold text-blue-500">{adminStats.totalWorkers}</p>
+                </div>
+                <div className="bg-white p-4 rounded-md shadow">
+                  <h3 className="text-lg font-semibold">Total Buyers</h3>
+                  <p className="text-2xl font-bold text-orange-500">{adminStats.totalBuyers}</p>
+                </div>
+                <div className="bg-white p-4 rounded-md shadow">
+                  <h3 className="text-lg font-semibold">Total Available Coins</h3>
+                  <p className="text-2xl font-bold text-green-500">
+                    <FaCoins className="inline-block text-yellow-500" /> {adminStats.totalAvailableCoins} Coins
+                  </p>
+                </div>
+                <div className="bg-white p-4 rounded-md shadow">
+                  <h3 className="text-lg font-semibold">Total Payments ($)</h3>
+                  <p className="text-2xl font-bold text-purple-500">{adminStats.totalPayments}</p>
+                </div>
+              </div>
+            )
+          )}
+        </div>
 
       {/* Withdraw requests */}
       {withdrawals.length > 0 && (
