@@ -3,7 +3,8 @@ import { Helmet } from 'react-helmet-async';
 import useUserByEmail from '../../../Hooks/useUserByEmail';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
-import { TableContainer, TableHead, Table, TableBody, TableRow, TableCell, CircularProgress } from '@mui/material';
+import { TableContainer, TableHead, Table, TableBody, TableRow, TableCell } from '@mui/material';
+import Loading from '../../../Shared/Loading';
 
 const Submissions = () => {
   const axiosSecure = useAxiosSecure();
@@ -26,7 +27,7 @@ const Submissions = () => {
       </Helmet>
       <h2 className='font-bold text-2xl text-center my-5'>Submissions</h2>
       {isLoading ? (
-        <CircularProgress/>
+        <Loading/>
       ) : submissions.length > 0 ? (
         <TableContainer sx={{ width: '100%' }}>
           <Table>

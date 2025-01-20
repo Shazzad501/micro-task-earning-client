@@ -5,6 +5,7 @@ import { Helmet } from 'react-helmet-async';
 import toast from 'react-hot-toast';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import useUserByEmail from '../../../Hooks/useUserByEmail';
+import { useNavigate } from 'react-router-dom';
 
 
 // Coin packages
@@ -19,7 +20,7 @@ const StripeCart = () => {
   const axiosSecure = useAxiosSecure();
   const [signInUser, refetch] = useUserByEmail();
   const { _id, name, userEmail, userPhoto } = signInUser || {};
-
+  const navigate = useNavigate()
 
   const stripe = useStripe();
   const elements = useElements();
@@ -75,6 +76,7 @@ const StripeCart = () => {
         });
         refetch()
         toast.success('Payment successful! Coins added to your account.');
+        navigate('/dashboard/payment-history')
       }
     } catch (err) {
       toast.error(err.message || 'An error occurred. Please try again.');
