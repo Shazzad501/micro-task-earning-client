@@ -21,6 +21,7 @@ import PrivateRoute from "./PrivateRoute";
 import BuyerRoute from "./BuyerRoute";
 import TaskDetails from "../Pages/Dashboard/Worker/TaskDetails";
 import WorkerRoute from "./WorkerRoute";
+import AdminRoute from "./AdminRoute";
 
 
 const router = createBrowserRouter([
@@ -54,15 +55,15 @@ const router = createBrowserRouter([
       // Admin routes
       {
         path: 'admin-home',
-        element: <AdminHome/>
+        element: <PrivateRoute><AdminRoute><AdminHome/></AdminRoute></PrivateRoute>
       },
       {
         path: 'manage-users',
-        element: <ManageUsers/>
+        element: <PrivateRoute><AdminRoute><ManageUsers/></AdminRoute></PrivateRoute>
       },
       {
         path: 'manage-task',
-        element: <ManageTasks/>
+        element: <PrivateRoute><AdminRoute><ManageTasks/></AdminRoute></PrivateRoute>
       },
 
       // Buyer routes
