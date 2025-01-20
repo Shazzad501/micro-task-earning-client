@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
+import toast from 'react-hot-toast';
 
 const AdminHome = () => {
   const axiosSecure = useAxiosSecure();
   const [selectedWithdrawal, setSelectedWithdrawal] = useState(null);
 
-  const { data: withdrawals = [] } = useQuery({
+  const { data: withdrawals = [],refetch } = useQuery({
     queryKey: ['withdrawals'],
     queryFn: async () => {
       const res = await axiosSecure.get('/withdrawals');
@@ -16,7 +17,18 @@ const AdminHome = () => {
   });
 
   const handlePaymentSuccess = (withdrawalId) => {
-    console.log(withdrawalId);
+    axiosSecure.patch(`/withdrawals/${withdrawalId}`)
+    .then(res=>{
+      const [updateWithdrawalResult, updateUserCoinsResult] = res.data
+      if(updateWithdrawalResult.modifiedCount > 0 && updateUserCoinsResult.modifiedCount
+        > 0){
+        refetch();
+        toast.success(`Status update done!`)
+      }
+    })
+    .catch(err=>{
+      toast.error(`Approve faild. ${err.message}`)
+    })
   };
 
   return (
@@ -64,7 +76,7 @@ const AdminHome = () => {
                           disabled={selectedWithdrawal === withdrawal._id}
                           onClick={() => handlePaymentSuccess(withdrawal._id)}
                         >
-                          {selectedWithdrawal === withdrawal._id ? 'Processing...' : 'Approve'}
+                          {selectedWithdrawal === withdrawal._id ? 'Processing...' : 'Success'}
                         </button>
                       </td>
                     </tr>
@@ -74,7 +86,7 @@ const AdminHome = () => {
           </div>
         </div>
       )}
-      {withdrawals.length === 0 && ( // Display message if no withdrawals exist
+      {withdrawals.length === 0 && ( 
         <div className="mt-4 text-center">
           <p className="text-gray-500">No withdrawal requests found.</p>
         </div>

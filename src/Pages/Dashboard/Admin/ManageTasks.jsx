@@ -63,7 +63,6 @@ const ManageTasks = () => {
             <th className="p-4">Required Workers</th>
             <th className="p-4">Payable Coin</th>
             <th className="p-4">Completion Date</th>
-            <th className="p-4">Status</th>
             <th className="p-4 pr-8">Actions</th>
           </tr>
         </thead>
@@ -82,7 +81,6 @@ const ManageTasks = () => {
               <td className="p-4 text-base font-bold">{task.required_workers}</td>
               <td className="p-4 flex items-center gap-2"><span className='text-orange-500'><FaCoins/></span> <span className='font-bold text-base'>{task.payable_amount}</span></td>
               <td className="p-4 text-base font-bold">{task.completion_date}</td>
-              <td className="p-4 text-base font-bold">{task.status}</td>
               <td className="p-4 pr-8 flex items-center justify-end">
                 <button
                   className="text-red-500 hover:text-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 rounded-full p-2"
