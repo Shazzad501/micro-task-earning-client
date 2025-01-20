@@ -8,6 +8,7 @@ import { FaCoins } from 'react-icons/fa';
 import { FaXmark } from 'react-icons/fa6';
 import toast from 'react-hot-toast';
 import Loading from '../../../Shared/Loading';
+
 const BuyerHome = () => {
   const axiosSecure = useAxiosSecure();
   const [signInUser] = useUserByEmail();
@@ -35,7 +36,7 @@ const BuyerHome = () => {
     enabled: !!userEmail,
   });
 
-  // view submission handler fuction
+  // view submission handler function
   const handleViewSubmission = (submission) => {
     setSelectedSubmission(submission);
   };
@@ -55,7 +56,7 @@ const BuyerHome = () => {
       }
     })
     .catch(err=>{
-      toast.error(`Approve faild. ${err.message}`)
+      toast.error(`Approve failed. ${err.message}`)
     })
   };
 
@@ -71,7 +72,7 @@ const BuyerHome = () => {
         }
       })
       .catch((err) => {
-        toast.error(`Rejection faild: ${err.message}`);
+        toast.error(`Rejection failed: ${err.message}`);
       });
   };
 
@@ -89,9 +90,9 @@ const BuyerHome = () => {
       {/* buyer stats */}
       <div className="bg-gray-100 p-4 rounded-md shadow-md mb-6">
         {statsLoading ? (
-          <Loading/>
+          <Loading />
         ) : (
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             <div className="bg-white p-4 rounded-md shadow">
               <h3 className="text-lg font-semibold">Total Tasks</h3>
               <p className="text-2xl font-bold text-blue-500">{buyerStats.totalTaskCount}</p>
@@ -116,53 +117,55 @@ const BuyerHome = () => {
         {tasks.filter((task) => task.status === 'pending').length === 0 ? (
           <p className="text-center text-gray-500 mt-4">No submission available</p>
         ) : (
-          <table className="w-full rounded-md shadow-md mt-4">
-            <thead>
-              <tr className="text-left bg-gray-100 text-gray-600 font-medium">
-                <th className="p-4 font-bold text-lg">Worker Name</th>
-                <th className="p-4 font-bold text-lg">Task Title</th>
-                <th className="p-4 font-bold text-lg">Payable Amount</th>
-                <th className="p-4 font-bold text-lg">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {tasks.filter((task) => task.status === 'pending').map((task) => (
-                <tr key={task._id} className="border-b border-gray-200 hover:bg-gray-100">
-                  <td className="p-4 font-bold text-base">{task.worker_name}</td>
-                  <td className="p-4 font-bold text-base">{task.task_title}</td>
-                  <td className="p-4 font-bold text-base">
-                    <p className="flex items-center gap-2">
-                      <span className="text-orange-400 text-xl"><FaCoins /></span>
-                      <span>{task.payable_amount}</span>
-                    </p>
-                  </td>
-                  <td className="p-4 flex items-center justify-end space-x-2">
-                    <button
-                      title="View Submission"
-                      className="text-blue-500 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded-full p-2"
-                      onClick={() => handleViewSubmission(task)}
-                    >
-                      <AiOutlineEye size={20} />
-                    </button>
-                    <button
-                      title="Approve"
-                      className="text-green-500 hover:text-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 rounded-full p-2"
-                      onClick={() => handleApproveSubmission(task._id, task.worker_email, task.payable_amount)}
-                    >
-                      <AiOutlineCheckCircle size={20} />
-                    </button>
-                    <button
-                      title="Reject"
-                      className="text-red-500 hover:text-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 rounded-full p-2"
-                      onClick={() => handleRejectSubmission(task._id, task.task_id)}
-                    >
-                      <AiOutlineCloseCircle size={20} />
-                    </button>
-                  </td>
+          <div className="overflow-x-auto mt-4">
+            <table className="min-w-full rounded-md shadow-md">
+              <thead>
+                <tr className="text-left bg-gray-100 text-gray-600 font-medium">
+                  <th className="p-4 font-bold text-lg">Worker Name</th>
+                  <th className="p-4 font-bold text-lg">Task Title</th>
+                  <th className="p-4 font-bold text-lg">Payable Amount</th>
+                  <th className="p-4 font-bold text-lg">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {tasks.filter((task) => task.status === 'pending').map((task) => (
+                  <tr key={task._id} className="border-b border-gray-200 hover:bg-gray-100">
+                    <td className="p-4 font-bold text-base">{task.worker_name}</td>
+                    <td className="p-4 font-bold text-base">{task.task_title}</td>
+                    <td className="p-4 font-bold text-base">
+                      <p className="flex items-center gap-2">
+                        <span className="text-orange-400 text-xl"><FaCoins /></span>
+                        <span>{task.payable_amount}</span>
+                      </p>
+                    </td>
+                    <td className="p-4 flex items-center justify-end space-x-2">
+                      <button
+                        title="View Submission"
+                        className="text-blue-500 hover:text-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 rounded-full p-2"
+                        onClick={() => handleViewSubmission(task)}
+                      >
+                        <AiOutlineEye size={20} />
+                      </button>
+                      <button
+                        title="Approve"
+                        className="text-green-500 hover:text-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 rounded-full p-2"
+                        onClick={() => handleApproveSubmission(task._id, task.worker_email, task.payable_amount)}
+                      >
+                        <AiOutlineCheckCircle size={20} />
+                      </button>
+                      <button
+                        title="Reject"
+                        className="text-red-500 hover:text-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 rounded-full p-2"
+                        onClick={() => handleRejectSubmission(task._id, task.task_id)}
+                      >
+                        <AiOutlineCloseCircle size={20} />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
 
@@ -177,16 +180,15 @@ const BuyerHome = () => {
                   Submission Details
                 </h3>
                 <button
-                title='Close'
+                  title="Close"
                   className="text-red-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 rounded-full p-2"
                   onClick={closeModal}
                 >
-                  <FaXmark/>
+                  <FaXmark />
                 </button>
               </div>
               <div className="p-6">
-            
-                <p className='text-base font-bold'>{selectedSubmission.submission_details}</p>
+                <p className="text-base font-bold">{selectedSubmission.submission_details}</p>
                 {/* Add more details as needed */}
               </div>
             </div>
