@@ -104,7 +104,7 @@ const BuyerHome = () => {
             <div className="bg-white p-4 rounded-md shadow">
               <h3 className="text-lg font-semibold">Total Paid</h3>
               <p className="text-2xl font-bold text-green-500">
-                <FaCoins className="inline-block text-yellow-500" /> {buyerStats.totalPaid}
+                <FaCoins className="inline-block text-yellow-500" /> {buyerStats.totalPaid} Coins
               </p>
             </div>
           </div>

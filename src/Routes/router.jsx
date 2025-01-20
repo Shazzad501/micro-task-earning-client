@@ -67,23 +67,23 @@ const router = createBrowserRouter([
       // Buyer routes
       {
         path: 'buyer-home',
-        element: <PrivateRoute><BuyerHome/></PrivateRoute>
+        element: <PrivateRoute><BuyerRoute><BuyerHome/></BuyerRoute></PrivateRoute>
       },
       {
         path: 'add-task',
-        element: <PrivateRoute><AddNewTask/></PrivateRoute>
+        element: <PrivateRoute><BuyerRoute><AddNewTask/></BuyerRoute></PrivateRoute>
       },
       {
         path: 'buyer-task',
-        element: <PrivateRoute><MyTasks/></PrivateRoute>
+        element: <PrivateRoute><BuyerRoute><MyTasks/></BuyerRoute></PrivateRoute>
       },
       {
         path: 'purchase-coin',
-        element: <PrivateRoute><PurchaseCoin/></PrivateRoute>
+        element: <PrivateRoute><BuyerRoute><PurchaseCoin/></BuyerRoute></PrivateRoute>
       },
       {
         path: 'payment-history',
-        element: <PrivateRoute><PaymentHistory/></PrivateRoute>
+        element: <PrivateRoute><BuyerRoute><PaymentHistory/></BuyerRoute></PrivateRoute>
       },
       
       // Worker routes

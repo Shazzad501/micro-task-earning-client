@@ -3,13 +3,10 @@ import Loading from '../Shared/Loading';
 import useUserByEmail from '../Hooks/useUserByEmail';
 
 const BuyerRoute = ({children}) => {
-  const [signInUser, signInUserPending] = useUserByEmail()
+  const [signInUser] = useUserByEmail()
   const {role} = signInUser || {}
   const location = useLocation();
 
-  // if(signInUserPending){
-  //   return <Loading/>
-  // }
   if(role === 'buyer'){
     return children;
   }
