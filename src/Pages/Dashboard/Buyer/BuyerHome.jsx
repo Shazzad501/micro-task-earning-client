@@ -49,14 +49,19 @@ const BuyerHome = () => {
   };
 
   // handle reject function
-  const handleRejectSubmission = async (submissionId) => {
-    try {
-      await axiosSecure.put(`/api/submissions/reject/${submissionId}`); // Replace with your API endpoint
-      // Update tasks state or refetch data after successful rejection
-      console.log('Submission rejected successfully');
-    } catch (error) {
-      console.error('Error rejecting submission:', error);
-    }
+  const handleRejectSubmission = (submissionId, taskId) => {
+    axiosSecure
+      .put(`/submission/reject/${submissionId}`, { taskId })
+      .then((res) => {
+        const [updateSubmissionResult, updateTaskResult] = res.data;
+        if (updateSubmissionResult.modifiedCount > 0 && updateTaskResult.modifiedCount > 0) {
+          refetch();
+          toast.success(`Rejected Submission`);
+        }
+      })
+      .catch((err) => {
+        toast.error(`Rejection faild: ${err.message}`);
+      });
   };
 
   // modal handler function
@@ -108,7 +113,7 @@ const BuyerHome = () => {
                   <button
                   title='Reject'
                     className="text-red-500 hover:text-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 rounded-full p-2"
-                    onClick={() => handleRejectSubmission(task._id)}
+                    onClick={() => handleRejectSubmission(task._id, task.task_id)}
                   >
                     <AiOutlineCloseCircle size={20} />
                   </button>
