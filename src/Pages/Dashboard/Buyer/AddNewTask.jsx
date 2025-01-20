@@ -63,7 +63,6 @@ const AddNewTask = () => {
       buyerEmail: userEmail,
       buyerName: name,
       buyerPhoto: userPhoto,
-      status: 'open',
       created_at: new Date(),
     };
 

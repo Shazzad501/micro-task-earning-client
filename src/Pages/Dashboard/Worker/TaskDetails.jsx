@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import Loading from '../../../Shared/Loading';
@@ -13,6 +13,7 @@ const TaskDetails = () => {
   const { id } = useParams();
   const [signInUser] = useUserByEmail()
   const {name, userEmail} = signInUser || {}
+  const navigate = useNavigate();
 
   // fetch task into db
   const { isLoading, error, data: task = {} } = useQuery({
@@ -59,12 +60,13 @@ const TaskDetails = () => {
     }
 
     try {
-      const response = await axiosSecure.post('/submission', submitableTask);
-
-      if(response.data.insertedId){
+      const res = await axiosSecure.post('/submission', submitableTask);
+      const [postResult, updateRquiredWorker] = res.data;
+      if(postResult.insertedId && updateRquiredWorker.modifiedCount>0){
         toast.success('Task Submited!')
         setSubmissionDetails('');
         setIsSubmitting(false);
+        navigate('/dashboard/worker-submission')
       };
     } catch (err) {
       toast.error(`${err.message}`)
