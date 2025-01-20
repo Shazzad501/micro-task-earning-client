@@ -7,12 +7,23 @@ import { AiOutlineCheckCircle, AiOutlineCloseCircle, AiOutlineEye } from 'react-
 import { FaCoins } from 'react-icons/fa';
 import { FaXmark } from 'react-icons/fa6';
 import toast from 'react-hot-toast';
+import Loading from '../../../Shared/Loading';
 const BuyerHome = () => {
   const axiosSecure = useAxiosSecure();
   const [signInUser] = useUserByEmail();
   const { userEmail } = signInUser || {};
 
   const [selectedSubmission, setSelectedSubmission] = useState(null);
+
+  // Fetch buyer stats
+  const { data: buyerStats = {}, isLoading: statsLoading } = useQuery({
+    queryKey: [userEmail, 'buyerStats'],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/buyer-stats/${userEmail}`);
+      return res.data.stats;
+    },
+    enabled: !!userEmail,
+  });
 
   // Fetch data
   const { data: tasks = [], refetch } = useQuery({
@@ -74,10 +85,32 @@ const BuyerHome = () => {
       <Helmet>
         <title>Buyer Home || Multi Task & Earning</title>
       </Helmet>
-      <div>
-        <h2>Buyer stats</h2>
+
+      {/* buyer stats */}
+      <div className="bg-gray-100 p-4 rounded-md shadow-md mb-6">
+        {statsLoading ? (
+          <Loading/>
+        ) : (
+          <div className="grid grid-cols-3 gap-4">
+            <div className="bg-white p-4 rounded-md shadow">
+              <h3 className="text-lg font-semibold">Total Tasks</h3>
+              <p className="text-2xl font-bold text-blue-500">{buyerStats.totalTaskCount}</p>
+            </div>
+            <div className="bg-white p-4 rounded-md shadow">
+              <h3 className="text-lg font-semibold">Pending Workers</h3>
+              <p className="text-2xl font-bold text-orange-500">{buyerStats.pendingWorkers}</p>
+            </div>
+            <div className="bg-white p-4 rounded-md shadow">
+              <h3 className="text-lg font-semibold">Total Paid</h3>
+              <p className="text-2xl font-bold text-green-500">
+                <FaCoins className="inline-block text-yellow-500" /> {buyerStats.totalPaid}
+              </p>
+            </div>
+          </div>
+        )}
       </div>
 
+      {/* task table */}
       <div>
         <h2 className="font-bold text-2xl text-center">Tasks to Review</h2>
         {tasks.filter((task) => task.status === 'pending').length === 0 ? (

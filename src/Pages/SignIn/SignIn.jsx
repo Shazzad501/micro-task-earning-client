@@ -96,9 +96,9 @@ const SignIn = () => {
       })
       .catch(err =>{
         toast.error(`${err.message}`)
-      })
+      });
       toast.success('Google Sign In success!')
-      refetch();
+      navigate('/dashboard/worker-home')
     })
     .catch(err=>{
       toast.error(`${err.message}`)
