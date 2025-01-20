@@ -6,6 +6,7 @@ import { useQuery } from '@tanstack/react-query';
 import { AiOutlineCheckCircle, AiOutlineCloseCircle, AiOutlineEye } from 'react-icons/ai';
 import { FaCoins } from 'react-icons/fa';
 import { FaXmark } from 'react-icons/fa6';
+import toast from 'react-hot-toast';
 const BuyerHome = () => {
   const axiosSecure = useAxiosSecure();
   const [signInUser] = useUserByEmail();
@@ -14,7 +15,7 @@ const BuyerHome = () => {
   const [selectedSubmission, setSelectedSubmission] = useState(null);
 
   // Fetch data
-  const { data: tasks = [] } = useQuery({
+  const { data: tasks = [], refetch } = useQuery({
     queryKey: [userEmail, 'tasks'],
     queryFn: async () => {
       const res = await axiosSecure.get(`/submissionbuyer/${userEmail}`);
@@ -29,14 +30,22 @@ const BuyerHome = () => {
   };
 
   // handle approve function
-  const handleApproveSubmission = async (submissionId) => {
-    try {
-      await axiosSecure.put(`/api/submissions/approve/${submissionId}`); // Replace with your API endpoint
-      // Update tasks state or refetch data after successful approval
-      console.log('Submission approved successfully');
-    } catch (error) {
-      console.error('Error approving submission:', error);
-    }
+  const handleApproveSubmission = (submissionId, workerEmail, payableAmount) => {
+    const amount = parseInt(payableAmount);
+    
+    axiosSecure.put(`/submission/approve/${submissionId}`, {
+      workerEmail, amount
+    })
+    .then(res=>{
+      const [updateSubmissionResult, updateWorkerCoinResult] = res.data
+      if(updateSubmissionResult.modifiedCount>0 && updateWorkerCoinResult.modifiedCount>0){
+        refetch()
+        toast.success(`Approve success`)
+      }
+    })
+    .catch(err=>{
+      toast.error(`Approve faild. ${err.message}`)
+    })
   };
 
   // handle reject function
@@ -92,7 +101,7 @@ const BuyerHome = () => {
                   <button
                   title='Approve'
                     className="text-green-500 hover:text-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 rounded-full p-2"
-                    onClick={() => handleApproveSubmission(task._id)}
+                    onClick={() => handleApproveSubmission(task._id, task.worker_email, task.payable_amount)}
                   >
                     <AiOutlineCheckCircle size={20} />
                   </button>
