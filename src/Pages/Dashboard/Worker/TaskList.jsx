@@ -19,7 +19,7 @@ const TaskList = () => {
   return (
     <div className="container mx-auto px-4 py-16">
       <Helmet>
-        <title>Task list || Multi Task & Earning</title>
+        <title>Task list || Micro Task & Earning</title>
       </Helmet>
       <h1 className="text-3xl font-bold mb-8">Available Tasks</h1>
 

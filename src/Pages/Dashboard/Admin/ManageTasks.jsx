@@ -52,7 +52,7 @@ const ManageTasks = () => {
   return (
     <div className="container mx-auto px-4 py-8">
       <Helmet>
-        <title>Manage Tasks (Admin View)</title>
+        <title>Manage Tasks || Micro Task & Earning</title>
       </Helmet>
       <h2 className="text-2xl font-bold mb-4">Task List</h2>
       <table className="w-full rounded-md shadow-md">

@@ -23,7 +23,7 @@ const Submissions = () => {
   return (
     <div className='min-h-screen'>
       <Helmet>
-        <title>Submission || Multi Task & Earning</title>
+        <title>Submission || Micro Task & Earning</title>
       </Helmet>
       <h2 className='font-bold text-2xl text-center my-5'>Submissions</h2>
       {isLoading ? (

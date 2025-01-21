@@ -8,7 +8,7 @@ const stripePromise = loadStripe(import.meta.env.VITE_Payment_Publish_Key);
 const PurchaseCoin = () => (
   <div>
     <Helmet>
-      <title>Purchase Coin || Multi Task & Earning</title>
+      <title>Purchase Coin || Micro Task & Earning</title>
     </Helmet>
     <Elements stripe={stripePromise}>
       <StripeCart />

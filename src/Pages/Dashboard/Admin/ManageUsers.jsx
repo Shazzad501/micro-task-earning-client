@@ -79,7 +79,7 @@ const ManageUsers = () => {
   return (
     <div>
       <Helmet>
-        <title>Manage Users || Multi Task & Earning</title>
+        <title>Manage Users || Micro Task & Earning</title>
       </Helmet>
       <h2 className="text-2xl font-bold mb-4">Manage Users</h2>
       <div className="overflow-x-auto rounded-md shadow-md">

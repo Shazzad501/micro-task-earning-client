@@ -89,7 +89,7 @@ const StripeCart = () => {
   return (
     <div>
       <Helmet>
-        <title>Purchase Coins || Multi Task & Earning</title>
+        <title>Purchase Coins || Micro Task & Earning</title>
       </Helmet>
       <div className="min-h-screen bg-gray-100 p-8">
         <h1 className="text-3xl font-bold text-center mb-8 text-black">Purchase Coin? Click any Cart!</h1>

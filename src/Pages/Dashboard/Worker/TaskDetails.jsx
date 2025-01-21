@@ -78,7 +78,7 @@ const TaskDetails = () => {
   return (
     <div className="container mx-auto px-4 py-10 mt-28">
       <Helmet>
-        <title>Task Details || Multi Task & Earning</title>
+        <title>Task Details || Micro Task & Earning</title>
       </Helmet>
 
       {isLoading ? (

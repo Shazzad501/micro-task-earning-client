@@ -106,7 +106,7 @@ const MyTasks = () => {
   return (
     <div className="p-8 bg-gray-100 min-h-screen">
       <Helmet>
-        <title>Buyer Task || Multi Task & Earning</title>
+        <title>Buyer Task || Micro Task & Earning</title>
       </Helmet>
       <h1 className="text-3xl font-semibold mb-6 text-gray-800 text-center">Your Tasks</h1>
 

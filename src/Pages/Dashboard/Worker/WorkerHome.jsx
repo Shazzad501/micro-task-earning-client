@@ -34,7 +34,7 @@ const WorkerHome = () => {
   });
   return (
     <div>
-      <Helmet><title>Worker Home || Multi Task & Earning</title></Helmet>
+      <Helmet><title>Worker Home || Micro Task & Earning</title></Helmet>
       
      {/* Worker Stats Section with Tailwind CSS */}
      <div className="bg-gray-100 p-4 rounded-md shadow-md mb-6">

@@ -49,7 +49,7 @@ const AdminHome = () => {
   return (
     <div>
       <Helmet>
-        <title>Admin Home || Multi Task & Earning</title>
+        <title>Admin Home || Micro Task & Earning</title>
       </Helmet>
      {/* Admin stats */}
         <div className="bg-gray-100 p-4 rounded-md shadow-md mb-6">

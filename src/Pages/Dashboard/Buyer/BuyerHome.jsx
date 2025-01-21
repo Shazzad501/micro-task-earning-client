@@ -84,7 +84,7 @@ const BuyerHome = () => {
   return (
     <div>
       <Helmet>
-        <title>Buyer Home || Multi Task & Earning</title>
+        <title>Buyer Home || Micro Task & Earning</title>
       </Helmet>
 
       {/* buyer stats */}

@@ -77,7 +77,7 @@ const Withdraw = () => {
 
   return (
     <div className="min-h-screen p-4"> 
-      <Helmet><title>Withdraw Earnings</title></Helmet>
+      <Helmet><title>Withdraw || Micro Task & Earnings</title></Helmet>
       <h2 className="text-2xl font-bold text-center mb-4">Withdraw Earnings</h2>
       
         <>
