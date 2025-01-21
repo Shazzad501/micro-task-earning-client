@@ -98,7 +98,7 @@ const BuyerHome = () => {
               <p className="text-2xl font-bold text-blue-500">{buyerStats.totalTaskCount}</p>
             </div>
             <div className="bg-white p-4 rounded-md shadow">
-              <h3 className="text-lg font-semibold">Pending Workers</h3>
+              <h3 className="text-lg font-semibold">Required Workers</h3>
               <p className="text-2xl font-bold text-orange-500">{buyerStats.pendingWorkers}</p>
             </div>
             <div className="bg-white p-4 rounded-md shadow">
