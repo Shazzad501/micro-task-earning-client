@@ -84,6 +84,7 @@ const SignIn = () => {
            .then(res=>{
              if(res.data.insertedId){
              toast.success('Now you are our worker')
+             refetch()
              }
            })
            .catch(err=>{
@@ -98,7 +99,6 @@ const SignIn = () => {
         toast.error(`${err.message}`)
       });
       toast.success('Google Sign In success!')
-      navigate('/dashboard/worker-home')
       refetch()
     })
     .catch(err=>{
@@ -178,7 +178,7 @@ const SignIn = () => {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full py-2 px-4 bg-blue-500 text-white font-semibold rounded-md shadow hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+            className="w-full py-2 px-4 bg-[#072129] hover:bg-[#0a2d38] text-white font-semibold rounded-md shadow  focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
           >
             Sign In
           </button>

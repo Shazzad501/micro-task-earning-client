@@ -73,6 +73,7 @@ const StripeCart = () => {
           buyerEmail: userEmail,
           buyerName: name,
           buyerPhoto: userPhoto,
+          adableCoin: selectedPackage.coins,
         });
         refetch()
         toast.success('Payment successful! Coins added to your account.');
