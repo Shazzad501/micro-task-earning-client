@@ -10,7 +10,7 @@ const BuyerRoute = ({children}) => {
   if(role === 'buyer'){
     return children;
   }
-  return <Navigate state={{from:location}} to='/signIn'></Navigate>;
+  return <Navigate state={{from:location}}></Navigate>;
 };
 
 export default BuyerRoute;

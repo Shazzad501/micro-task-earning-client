@@ -21,7 +21,7 @@ const TopWorker = () => {
         {topWorkers.map((worker) => (
           <div
             key={worker._id}
-            className="bg-white rounded-lg shadow-md p-6 text-center flex flex-col items-center"
+            className="bg-gray-100 rounded-lg shadow-md p-6 text-center flex flex-col items-center"
           >
             <img
               src={worker.userPhoto}

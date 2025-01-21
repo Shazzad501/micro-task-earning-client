@@ -12,7 +12,7 @@ const Home = () => {
         <title>Home || Multi Task & Earning</title>
       </Helmet>
       <Slider/>
-      <div className='max-w-7xl mx-auto bg-gray-100'>
+      <div className='max-w-7xl mx-auto'>
       <TopWorker/>
       </div>
       <Testimonials/>

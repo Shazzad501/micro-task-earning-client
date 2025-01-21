@@ -55,7 +55,7 @@ const DashboardLayout = () => {
       <div className="flex">
         {/* Sidebar */}
         <aside
-          className={`fixed top-0 left-0 h-auto bg-black text-white p-4 z-10 transition-transform transform ${
+          className={`fixed top-0 left-0 h-auto bg-black text-white p-4 z-20 transition-transform transform ${
             isSidebarOpen ? "translate-x-0" : "-translate-x-full"
           } sm:relative sm:translate-x-0 sm:w-1/4 sm:block sm:bg-black sm:text-white`}
         >
