@@ -3,6 +3,7 @@ import Slider from './Slider';
 import { Helmet } from 'react-helmet-async';
 import Testimonials from './Testimonials';
 import TopWorker from './TopWorker';
+import Features from './Features';
 
 
 const Home = () => {
@@ -12,6 +13,7 @@ const Home = () => {
         <title>Home || Multi Task & Earning</title>
       </Helmet>
       <Slider/>
+      <Features/>
       <div className='max-w-7xl mx-auto'>
       <TopWorker/>
       </div>
