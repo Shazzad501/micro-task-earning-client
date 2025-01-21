@@ -91,18 +91,18 @@ const StripeCart = () => {
         <title>Purchase Coins || Multi Task & Earning</title>
       </Helmet>
       <div className="min-h-screen bg-gray-100 p-8">
-        <h1 className="text-3xl font-bold text-center mb-8">Purchase Coin? Click any Cart!</h1>
+        <h1 className="text-3xl font-bold text-center mb-8 text-black">Purchase Coin? Click any Cart!</h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {packages.map((pkg) => (
             <div
               key={pkg.coins}
-              className={`bg-white shadow-lg rounded-lg p-6 text-center ${
-                selectedPackage?.coins === pkg.coins ? 'border-2 border-blue-600' : ''
+              className={`bg-[#072129] hover:bg-[#0a2d38] text-white shadow-lg rounded-lg p-6 text-center ${
+                selectedPackage?.coins === pkg.coins ? 'border-2 border-[#072129]' : ''
               }`}
               onClick={() => setSelectedPackage(pkg)}
             >
               <h2 className="text-xl font-bold">{pkg.coins} Coins</h2>
-              <p className="text-gray-700 mt-2">${pkg.amount}</p>
+              <p className="text-white mt-2">${pkg.amount}</p>
             </div>
           ))}
         </div>
@@ -115,7 +115,7 @@ const StripeCart = () => {
               <CardElement className="border p-2 rounded bg-gray-50" />
               <button
                 type="submit"
-                className={`w-full py-2 bg-blue-600 text-white font-bold rounded ${
+                className={`w-full py-2 bg-[#072129] hover:bg-[#0a2d38] text-white font-bold rounded ${
                   loading ? 'opacity-50 cursor-not-allowed' : ''
                 }`}
                 disabled={loading}

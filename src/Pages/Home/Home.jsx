@@ -4,6 +4,8 @@ import { Helmet } from 'react-helmet-async';
 import Testimonials from './Testimonials';
 import TopWorker from './TopWorker';
 import Features from './Features';
+import HowItWork from './HowItWork';
+import EarnMore from './EarnMore';
 
 
 const Home = () => {
@@ -17,8 +19,9 @@ const Home = () => {
       <div className='max-w-7xl mx-auto'>
       <TopWorker/>
       </div>
+      <HowItWork/>
       <Testimonials/>
-
+      <EarnMore/>
     </div>
   );
 };

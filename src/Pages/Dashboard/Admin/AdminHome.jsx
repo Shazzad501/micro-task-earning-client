@@ -112,7 +112,7 @@ const AdminHome = () => {
                       <td className="p-4 text-yellow-500">{withdrawal.status}</td>
                       <td className="p-4">
                         <button
-                          className="btn btn-sm text-white bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded disabled:opacity-50"
+                          className="btn btn-sm text-white bg-[#072129] hover:bg-[#0a2d38] font-bold py-2 px-4 rounded disabled:opacity-50"
                           disabled={selectedWithdrawal === withdrawal._id}
                           onClick={() => handlePaymentSuccess(withdrawal._id)}
                         >

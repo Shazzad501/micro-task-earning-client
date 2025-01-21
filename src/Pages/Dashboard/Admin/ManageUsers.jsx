@@ -5,6 +5,8 @@ import { useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
 import useUserByEmail from '../../../Hooks/useUserByEmail';
+import { FaEdit } from 'react-icons/fa';
+import { MdDeleteForever } from 'react-icons/md';
 
 const ManageUsers = () => {
   const axiosSecure = useAxiosSecure();
@@ -118,17 +120,19 @@ const ManageUsers = () => {
                 <td className="p-4">{user.totalCoin}</td>
                 <td className="p-4 flex space-x-2">
                   <button
-                    className="text-red-500 hover:text-red-700 font-bold py-2 px-4 rounded disabled:opacity-50"
+                  title='Remove'
+                    className="btn text-red-500 text-2xl hover:text-red-700 font-bold py-2 px-4 rounded disabled:opacity-50"
                     onClick={() => handleDeleteUser(user._id)}
                   >
-                    Remove
+                    <MdDeleteForever/>
                   </button>
                   {selectedUser !== user._id && (
                     <button
-                      className="btn btn-sm text-white bg-blue-500 hover:bg-blue-700 font-bold py-2 px-4 rounded"
+                    title='Edit Role'
+                      className="btn text-lg text-[#072129] hover:text-[#0a2d38] font-bold py-2 px-4 rounded"
                       onClick={() => setSelectedUser(user._id)}
                     >
-                      Edit Role
+                      <FaEdit/>
                     </button>
                   )}
                 </td>

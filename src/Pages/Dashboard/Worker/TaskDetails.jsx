@@ -136,7 +136,7 @@ const TaskDetails = () => {
               )}
               <button
                 type="submit"
-                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                className="bg-[#072129] hover:bg-[#0a2d38] text-white font-bold py-2 px-4 rounded"
                 disabled={isSubmitting}
               >
                 {isSubmitting ? 'Submitting...' : 'Submit'}

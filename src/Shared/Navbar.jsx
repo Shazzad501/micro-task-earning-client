@@ -62,7 +62,7 @@ const Navbar = () => {
   </>
   return (
     <>
-      <div className="navbar bg-black bg-opacity-55 fixed top-0 left-0 right-0 z-50">
+      <div className="navbar bg-black bg-opacity-75 fixed top-0 left-0 right-0 z-50">
         <div className="navbar-start">
           <Link to='/'><img className='w-28 h-16' src={logo} alt="logo" /></Link>
         </div>

@@ -145,7 +145,7 @@ const Withdraw = () => {
             <button
             onClick={handleWithdraw} 
               disabled={isWithdrawing || coinsToWithdraw < 200 || !paymentSystem || !accountNumber} 
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full"
+              className="bg-[#072129] hover:bg-[#0a2d38] text-white font-bold py-2 px-4 rounded w-full"
             >
               {isWithdrawing ? 'Withdrawing...' : 'Withdraw'}
             </button>

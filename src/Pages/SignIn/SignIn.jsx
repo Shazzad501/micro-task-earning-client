@@ -99,6 +99,7 @@ const SignIn = () => {
       });
       toast.success('Google Sign In success!')
       navigate('/dashboard/worker-home')
+      refetch()
     })
     .catch(err=>{
       toast.error(`${err.message}`)

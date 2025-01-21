@@ -57,7 +57,7 @@ const TaskList = () => {
                 <div className="flex justify-end mt-4">
                   <Link
                     to={`/tasks/${task._id}`}
-                    className="text-white bg-blue-500 hover:bg-blue-700 font-medium rounded-lg px-4 py-2"
+                    className="text-white bg-[#072129] hover:bg-[#0a2d38] font-medium rounded-lg px-4 py-2"
                   >
                     View Details
                   </Link>

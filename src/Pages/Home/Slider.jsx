@@ -27,7 +27,7 @@ const banners = [
 
 const Slider = () => {
   return (
-    <div className="bg-black py-20">
+    <div className="bg-black pt-20">
       <Carousel
         autoPlay
         infiniteLoop

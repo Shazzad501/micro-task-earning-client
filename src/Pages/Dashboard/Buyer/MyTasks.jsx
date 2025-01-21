@@ -5,6 +5,8 @@ import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import Swal from 'sweetalert2';
+import { MdDeleteForever, MdEditSquare } from 'react-icons/md';
+import { FaEdit } from 'react-icons/fa';
 
 const MyTasks = () => {
   const [signInUser, refetch] = useUserByEmail();
@@ -142,16 +144,18 @@ const MyTasks = () => {
                   </td>
                   <td className="px-4 py-2">
                     <button
+                    title='Update'
                       onClick={() => handleUpdate(task)}
-                      className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300"
+                      className="text-[#0b2c36] text-xl font-bold px-4 py-2 rounded-lg transition duration-300"
                     >
-                      Update
+                      <FaEdit/>
                     </button>
                     <button
+                    title='Delete'
                       onClick={() => handleDelete(task)}
-                      className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300 ml-2"
+                      className="text-red-600 px-4 py-2 rounded-lg transition duration-300 ml-2 text-2xl font-bold"
                     >
-                      Delete
+                      <MdDeleteForever/>
                     </button>
                   </td>
                 </tr>

@@ -15,26 +15,42 @@ const TopWorker = () => {
   });
 
   return (
-    <div className=" py-16 px-4">
-      <h2 className="text-3xl font-semibold text-center mb-6">Our Top Worker</h2>
-      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+    <section className="bg-white py-16 px-4">
+      <h2 className="text-4xl font-extrabold text-center mb-12 text-black">
+        Meet Our <span className="text-[#183e49]">Top Workers</span>
+      </h2>
+      <div className="grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
         {topWorkers.map((worker) => (
           <div
             key={worker._id}
-            className="bg-gray-100 rounded-lg shadow-md p-6 text-center flex flex-col items-center"
+            className="relative bg-white rounded-lg shadow-lg p-6 text-center transition-transform duration-300 hover:-translate-y-3 hover:shadow-xl"
           >
-            <img
-              src={worker.userPhoto}
-              alt={worker.name}
-              className="w-24 h-24 rounded-full mb-4 object-cover"
-            />
-            <h3 className="text-lg font-bold mb-2">{worker.name}</h3>
-            <p className="text-sm text-gray-600 mb-4 flex items-center gap-2"><span className='text-xl font-bold text-orange-400'><FaCoins/></span><span className='text-base font-bold'>{worker.totalCoin}</span></p>
-          
+            {/* Worker Image */}
+            <div className="w-24 h-24 rounded-full overflow-hidden mx-auto border-4 border-[#0c2e38] shadow-lg">
+              <img
+                src={worker.userPhoto}
+                alt={worker.name}
+                className="w-full h-full object-cover"
+              />
+            </div>
+
+            {/* Worker Details */}
+            <div className="mt-6">
+              <h3 className="text-2xl font-bold text-gray-800">{worker.name}</h3>
+            </div>
+
+            {/* Earnings */}
+            <div className="mt-4 flex items-center justify-center gap-2 text-orange-500 font-semibold text-lg">
+              <FaCoins className="text-2xl" />
+              <span>{worker.totalCoin}</span>
+            </div>
+
+            {/* Background Badge */}
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-500 rounded-lg opacity-10 -z-10"></div>
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 
