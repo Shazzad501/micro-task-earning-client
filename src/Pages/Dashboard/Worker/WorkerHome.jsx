@@ -17,7 +17,7 @@ const WorkerHome = () => {
     queryKey: [userEmail, 'worker-stats'],
     queryFn: async () => {
       const res = await axiosSecure.get(`/worker-stats/${userEmail}`);
-      console.log(res.data.stats)
+      // console.log(res.data.stats)
       return res.data.stats;
     },
     enabled: !!userEmail,
