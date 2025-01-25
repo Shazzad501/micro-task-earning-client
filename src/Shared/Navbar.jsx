@@ -57,7 +57,7 @@ const Navbar = () => {
         user && <li><Link onClick={handleLogOut} className="lg:hidden font-bold text-base text-black">Sign Out</Link></li> 
       }
       
-      <li><Link to='https://github.com/Programming-Hero-Web-Course4/b10a12-client-side-Shazzad501' target='_blank' className={`font-bold text-base bg-transparent  text-black hover:bg-transparent lg:hidden`}>Join as Dev</Link></li> 
+      <li><Link to='https://github.com/Shazzad501/micro-task-earning-client' target='_blank' className={`font-bold text-base bg-transparent  text-black hover:bg-transparent lg:hidden`}>Join as Dev</Link></li> 
 
   </>
   return (
@@ -94,7 +94,7 @@ const Navbar = () => {
 
           <button onClick={handleLogOut} className="hidden lg:flex btn font-bold text-base bg-transparent hover:bg-transparent border-gray-300 text-white">Sign Out</button>
 
-          <Link to='https://github.com/Programming-Hero-Web-Course4/b10a12-client-side-Shazzad501' target='_blank' className={`btn font-bold text-base bg-transparent  text-white hover:bg-transparent hidden lg:flex`}>Join as Dev</Link>
+          <Link to='https://github.com/Shazzad501/micro-task-earning-client' target='_blank' className={`btn font-bold text-base bg-transparent  text-white hover:bg-transparent hidden lg:flex`}>Join as Dev</Link>
           
           <div 
            title={user?.displayName}
