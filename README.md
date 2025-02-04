@@ -52,7 +52,7 @@ Ensure you have the following installed:
 
 1. **Clone the Repository**  
    ```sh
-   git clone https://github.com/your-username/micro-tasking-platform.git
+   git clone https://github.com/Shazzad501/micro-tasking-platform.git
    cd micro-tasking-platform
    ```
 
