@@ -1,4 +1,6 @@
-# Micro Tasking and Earning Platform(https://multi-task-earning.web.app/)
+# Micro Tasking and Earning Platform
+
+Live Link: https://multi-task-earning.web.app/
 
 ## 📌 Introduction
 
