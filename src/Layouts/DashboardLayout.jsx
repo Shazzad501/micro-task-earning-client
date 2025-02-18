@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import logo from '../assets/nav_logo.png'
 import useUserByEmail from '../Hooks/useUserByEmail';
-import { Link, NavLink, Outlet } from 'react-router-dom';
-import {  FaBars, FaFacebook, FaGithub, FaHistory, FaHome, FaLinkedin, FaList, FaSignOutAlt, FaTasks, FaTwitter } from 'react-icons/fa';
+import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
+import {  FaBars, FaFacebook, FaGithub, FaHistory, FaHome, FaLinkedin, FaList, FaSignOutAlt, FaTasks, FaTwitter, FaUserCircle } from 'react-icons/fa';
 import { MdAddCard } from 'react-icons/md';
 import { BiSolidPurchaseTag } from 'react-icons/bi';
 import { IoCheckmarkDoneCircle } from 'react-icons/io5';
@@ -12,10 +12,15 @@ const DashboardLayout = () => {
   const [signInUser] = useUserByEmail();
   const {name, totalCoin, role, userPhoto} = signInUser || {};
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
+  const navigate = useNavigate()
   const toggleSidebar = () => {
     setIsSidebarOpen(!isSidebarOpen);
   };
+
+  const profileNavigation = ()=>{
+    navigate('/dashboard/profile')
+  }
+
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -29,6 +34,7 @@ const DashboardLayout = () => {
             Available Coins: <strong>{totalCoin}</strong>
           </span>
           <img
+            onClick={profileNavigation}
             src={userPhoto}
             alt="User"
             className="rounded-full w-10 h-10"
@@ -137,6 +143,13 @@ const DashboardLayout = () => {
                 </li>
               </>
             )}
+
+            {/* user profile navigation */}
+            <li>
+                  <NavLink to='/dashboard/profile' className='font-bold text-base flex items-center gap-3'>
+                    <FaUserCircle className='font-bold text-lg'/> Profile
+                  </NavLink>
+                </li>
           </ul>
           {/* Close Button for Mobile */}
           <button
@@ -160,7 +173,10 @@ const DashboardLayout = () => {
           <div className='p-6 bg-gray-50 ml-0 sm:ml-auto min-h-[400px]'>
           <Outlet />
           </div>
-          {/* Footer */}
+          
+        </main>
+      </div>
+        {/* Footer */}
           <footer className="footer bg-black text-white p-10 border-white border-t-2">
             <aside>
               <img className='w-44 h-24' src={logo} alt="logo" />
@@ -188,11 +204,7 @@ const DashboardLayout = () => {
                 </Link>
               </div>
             </nav>
-          </footer>
-        </main>
-      </div>
-
-      
+          </footer> 
     </div>
   );
 };

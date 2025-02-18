@@ -22,6 +22,7 @@ import BuyerRoute from "./BuyerRoute";
 import TaskDetails from "../Pages/Dashboard/Worker/TaskDetails";
 import WorkerRoute from "./WorkerRoute";
 import AdminRoute from "./AdminRoute";
+import UserProfile from "../Pages/UserProfile/UserProfile";
 
 
 const router = createBrowserRouter([
@@ -52,6 +53,11 @@ const router = createBrowserRouter([
     path: 'dashboard',
     element: <PrivateRoute><DashboardLayout/></PrivateRoute>,
     children: [
+      // user profile route
+      {
+        path: 'profile',
+        element: <PrivateRoute><UserProfile/></PrivateRoute>
+      },
       // Admin routes
       {
         path: 'admin-home',
