@@ -73,12 +73,12 @@ const UserProfile = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-black text-white p-4">
+    <div className="flex justify-center items-center min-h-screen text-white p-4">
       <Helmet>
         <title>Profile || Micro Task & Earning</title>
       </Helmet>
 
-      <div className="bg-gray-900 shadow-lg rounded-lg p-6 max-w-2xl w-full flex flex-col md:flex-row items-center md:items-start gap-6 border border-gray-700">
+      <div className="bg-gradient-to-r from-[#0a2027] to-[#072129] shadow-lg rounded-lg p-6 max-w-2xl w-full flex flex-col md:flex-row items-center md:items-start gap-6 border border-gray-700">
         {/* Left Side: User Photo */}
         <div className="w-32 h-32 rounded-full border-4 border-white overflow-hidden">
           <img

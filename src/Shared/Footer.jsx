@@ -19,7 +19,7 @@ const Footer = () => {
           <nav>
             <h6 className="footer-title">Social</h6>
             <div className="grid grid-flow-col gap-4">
-              <Link to='https://www.linkedin.com/in/md-maruf-162799255/' target='_blank' className='font-bold text-3xl'>
+              <Link to='https://www.linkedin.com/in/shazzad-maruf/' target='_blank' className='font-bold text-3xl'>
               <FaLinkedin/>
               </Link>
 
