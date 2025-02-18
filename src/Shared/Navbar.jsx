@@ -60,6 +60,10 @@ const Navbar = () => {
       <li><Link to='https://github.com/Shazzad501/micro-task-earning-client' target='_blank' className={`font-bold text-base bg-transparent  text-black hover:bg-transparent lg:hidden`}>Join as Dev</Link></li> 
 
   </>
+
+  const profileNavigation = ()=>{
+    navigate('/dashboard/profile')
+  }
   return (
     <>
     <div className='bg-black bg-opacity-75 fixed top-0 left-0 right-0 z-50'>
@@ -98,6 +102,7 @@ const Navbar = () => {
           <Link to='https://github.com/Shazzad501/micro-task-earning-client' target='_blank' className={`btn font-bold text-base bg-transparent  text-white hover:bg-transparent hidden lg:flex`}>Join as Dev</Link>
           
           <div 
+          onClick={profileNavigation}
            title={user?.displayName}
           className='rounded-full h-12 w-12 border-2 overflow-hidden'>
              <img 
