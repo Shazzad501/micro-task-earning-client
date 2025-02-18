@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from '../Shared/Navbar';
 import { Outlet, useLocation } from 'react-router-dom';
 import Footer from '../Shared/Footer';
+import { Helmet } from 'react-helmet-async';
 
 const MainLayout = () => {
   const location = useLocation()
