@@ -28,7 +28,7 @@ const Testimonials = () => {
 
   return (
     <section className="py-20 bg-white">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-5">
         <h2 className="text-3xl text-[#072129] font-bold text-center mb-10">What Our Users Say</h2>
         <Carousel 
           autoPlay 

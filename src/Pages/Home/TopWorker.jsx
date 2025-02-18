@@ -15,7 +15,7 @@ const TopWorker = () => {
   });
 
   return (
-    <section className="bg-white py-16 px-4">
+    <section className="bg-white py-16 px-5">
       <h2 className="text-4xl font-extrabold text-center mb-12 text-black">
         Meet Our <span className="text-[#183e49]">Top Workers</span>
       </h2>

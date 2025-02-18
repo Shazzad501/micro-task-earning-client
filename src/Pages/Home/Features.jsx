@@ -19,7 +19,7 @@ const Features = () => {
 
   return (
     <section className="bg-base-200 py-16">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-5">
         <h2 className="text-3xl font-bold text-center mb-8 text-[#072129]">Why Choose Us?</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {features.map((feature, idx) => (
