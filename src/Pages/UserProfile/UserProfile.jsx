@@ -2,15 +2,16 @@ import React, { useState } from "react";
 import { FaUserEdit } from "react-icons/fa";
 import useUserByEmail from "../../Hooks/useUserByEmail";
 import { Helmet } from "react-helmet-async";
-import useAxiosSecure from "../../Hooks/useAxiosSecure";
 import axios from "axios";
 import toast from "react-hot-toast";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const img_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const img_hosting_api = `https://api.imgbb.com/1/upload?key=${img_hosting_key}`;
 
 const UserProfile = () => {
-  const axiosSecure = useAxiosSecure();
+  const axiosSecure = useAxiosSecure()
   const [signInUser, refetch] = useUserByEmail(); 
   const { _id, name, userEmail, userPhoto, role, totalCoin } = signInUser || {};
 
@@ -28,7 +29,7 @@ const UserProfile = () => {
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
     
-    let newPhotoURL = userPhoto; // Default to existing photo
+    let newPhotoURL = userPhoto;
 
     if (selectedPhoto) {
       const formData = new FormData();
