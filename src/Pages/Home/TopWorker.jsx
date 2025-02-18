@@ -19,7 +19,7 @@ const TopWorker = () => {
       <h2 className="text-4xl font-extrabold text-center mb-12 text-black">
         Meet Our <span className="text-[#183e49]">Top Workers</span>
       </h2>
-      <div className="grid gap-10 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+      <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 max-w-7xl mx-auto">
         {topWorkers.map((worker) => (
           <div
             key={worker._id}
