@@ -4,21 +4,21 @@ import useUserByEmail from "../../Hooks/useUserByEmail";
 import { Helmet } from "react-helmet-async";
 import axios from "axios";
 import toast from "react-hot-toast";
-import useAxiosPublic from "../../Hooks/useAxiosPublic";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const img_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const img_hosting_api = `https://api.imgbb.com/1/upload?key=${img_hosting_key}`;
 
 const UserProfile = () => {
-  const axiosSecure = useAxiosSecure()
-  const [signInUser, refetch] = useUserByEmail(); 
+  const axiosSecure = useAxiosSecure();
+  const [signInUser, refetch] = useUserByEmail();
   const { _id, name, userEmail, userPhoto, role, totalCoin } = signInUser || {};
 
   // State for Modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [updatedName, setUpdatedName] = useState(name || "");
   const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   // Handle image selection
   const handleFileChange = (e) => {
@@ -28,8 +28,9 @@ const UserProfile = () => {
   // Handle Profile Update
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
-    
-    let newPhotoURL = userPhoto;
+    setLoading(true);
+
+    let newPhotoURL = userPhoto || "";
 
     if (selectedPhoto) {
       const formData = new FormData();
@@ -39,9 +40,14 @@ const UserProfile = () => {
         const imgResponse = await axios.post(img_hosting_api, formData);
         if (imgResponse.data.success) {
           newPhotoURL = imgResponse.data.data.url;
+        } else {
+          toast.error("Image upload failed!");
+          setLoading(false);
+          return;
         }
       } catch (error) {
-        toast.error(`Image upload failed: ${error.message}`, );
+        toast.error(`Image upload failed: ${error.message}`);
+        setLoading(false);
         return;
       }
     }
@@ -53,12 +59,16 @@ const UserProfile = () => {
       });
 
       if (response.data.modifiedCount > 0) {
-       toast.success("Profile updated successfully!");
+        toast.success("Profile updated successfully!");
         setIsModalOpen(false);
         refetch();
+      } else {
+        toast.error("No changes detected!");
       }
     } catch (error) {
       toast.error(`Error updating profile: ${error.message}`);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -69,11 +79,10 @@ const UserProfile = () => {
       </Helmet>
 
       <div className="bg-gray-900 shadow-lg rounded-lg p-6 max-w-2xl w-full flex flex-col md:flex-row items-center md:items-start gap-6 border border-gray-700">
-        
         {/* Left Side: User Photo */}
         <div className="w-32 h-32 rounded-full border-4 border-white overflow-hidden">
           <img
-            src={userPhoto}
+            src={userPhoto || "https://via.placeholder.com/150"}
             alt="User"
             className="w-full h-full object-cover"
           />
@@ -108,7 +117,7 @@ const UserProfile = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-gray-900 p-6 rounded-lg shadow-lg w-96 border border-gray-700">
             <h2 className="text-xl font-semibold text-white mb-4">Edit Profile</h2>
-            
+
             <form onSubmit={handleUpdateProfile} className="space-y-4">
               {/* Name Input */}
               <div>
@@ -145,8 +154,9 @@ const UserProfile = () => {
                 <button
                   type="submit"
                   className="px-4 py-2 bg-white text-black rounded hover:bg-gray-300"
+                  disabled={loading}
                 >
-                  Save Changes
+                  {loading ? "Saving..." : "Save Changes"}
                 </button>
               </div>
             </form>

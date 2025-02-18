@@ -8,7 +8,8 @@ import useUserByEmail from '../Hooks/useUserByEmail';
 const Navbar = () => {
   const {user, logoutUser} = useAuth();
   const navigate = useNavigate()
-  const [signInUser] = useUserByEmail()
+  const [signInUser] = useUserByEmail();
+  const {userPhoto, name} = signInUser || {}
   const {totalCoin, role} = signInUser || {};
   const handleLogOut = ()=>{
     logoutUser()
@@ -103,11 +104,11 @@ const Navbar = () => {
           
           <div 
           onClick={profileNavigation}
-           title={user?.displayName}
+           title={name}
           className='rounded-full h-12 w-12 border-2 overflow-hidden'>
              <img 
             className="w-full h-full object-cover"
-            src={user?.photoURL} 
+            src={userPhoto} 
             alt="user img" />
           </div>
           </>:<>
