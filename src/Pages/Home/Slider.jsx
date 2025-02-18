@@ -3,6 +3,9 @@ import { Carousel } from "react-responsive-carousel";
 import task1 from "../../assets/task1.avif";
 import task2 from "../../assets/task2.avif";
 import task3 from "../../assets/task3.avif";
+import { Link } from "react-router-dom";
+import useUserByEmail from "../../Hooks/useUserByEmail";
+import { useEffect, useState } from "react";
 
 const banners = [
   {
@@ -26,6 +29,27 @@ const banners = [
 ];
 
 const Slider = () => {
+
+  const [signInUser] = useUserByEmail();
+  const [navigation, setNavigation] = useState('')
+  const {  role } = signInUser || {};
+
+    // get started btn navigation mathod
+    useEffect(()=>{
+      if(role === 'admin'){
+        setNavigation('/dashboard/admin-home')
+      }
+      else if(role === 'buyer'){
+        setNavigation('/dashboard/buyer-home')
+      }
+      else if(role === 'worker'){
+        setNavigation('/dashboard/worker-home')
+      }
+      else{
+        setNavigation('/signIn')
+      }
+    }, [role])
+
   return (
     <div className="bg-black pt-20">
       <Carousel
@@ -58,9 +82,9 @@ const Slider = () => {
               <p className="font-medium text-lg md:text-xl mb-6">
                 {banner.description}
               </p>
-              <button className="btn font-bold text-base bg-transparent border rounded-md text-white hover:bg-white hover:text-black transition duration-300">
+              <Link to={navigation} className="btn font-bold text-base bg-transparent border rounded-md text-white hover:bg-white hover:text-black transition duration-300">
                 Get Started
-              </button>
+              </Link>
             </div>
           </div>
         ))}

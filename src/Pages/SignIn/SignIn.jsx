@@ -23,9 +23,9 @@ const SignIn = () => {
   const {createUserWithGoogle,loginUser, setUser} = useAuth()
   const navigate = useNavigate()
   const axiosPublic = useAxiosPublic()
-  const axiosSecure = useAxiosSecure()
+  // const axiosSecure = useAxiosSecure()
   const [signInUser, refetch] = useUserByEmail();
-  const { userEmail, role } = signInUser || {};
+  const {  role } = signInUser || {};
 
 
   // Navigate based on role
